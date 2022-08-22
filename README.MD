@@ -1,4 +1,4 @@
-# Reposório da Matéria de Grafos
+# Repositório da Matéria de Grafos
 
 ## Objetivo
 
