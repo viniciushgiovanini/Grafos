@@ -4,74 +4,117 @@
 
 class Program
 {
-  public static bool eDirecionada(String a)
+  private static bool selectionSort(int[] ver, int busca)
   {
-    char[] letra = a.ToCharArray();
-    Boolean resp = true;
-    if (letra[1] == '{')
-    {
-      resp = false;
-    }
-    else if (letra[1] == '(')
-    {
-      resp = true;
-    }
+    bool verticeExistente = false;
 
-    return resp;
+    for (int i = 0; i < ver.Length; i++)
+    {
+      if (ver[i] == busca)
+      {
+        verticeExistente = true;
+      }
+    }
+    return verticeExistente;
   }
-
-  public int contadorArestas(String a)
+  private static int qtdElementosArray(int[] a)
   {
-
     int contador = 0;
-    char[] letra = a.ToCharArray();
-    for (int i = 0; i < a.Length; i++)
+
+    foreach (var i in a)
     {
-      if (letra[i] == '{' || letra[i] == '(')
+      if (i != 0)
       {
         contador++;
       }
     }
-
-    if (contador != 0)
-    {
-      contador -= 2;
-    }
-
     return contador;
   }
-
-  public int contadorVertices(String v)
+  private static int contarTam()
   {
 
-    char[] letra = v.ToCharArray();
-    int contador = 0;
-    for (int i = 0; i < v.Length; i++)
+
+    using var file = new StreamReader("./graph.txt");//poderia usar RAF pra otimizar aqui
+    matrizadj Adj = new matrizadj();
+    String? LinhaTam;
+    bool podeContar = false;
+    int[] vertice = new int[100];
+    int contadorVertice = 0;
+
+    while ((LinhaTam = file.ReadLine()) != "fim")
     {
-      if (letra[i] != '{')
+      if (LinhaTam != null)
       {
-        contador++;
+        if (LinhaTam.Contains("n  m"))
+        {
+          podeContar = true;
+          LinhaTam = file.ReadLine();
+        }
+        else if (LinhaTam.Equals("fim"))
+        {
+          podeContar = false;
+        }
+
+
+        if (podeContar && LinhaTam != null)
+        {
+
+          int valorVertice = Adj.limpar(LinhaTam);
+
+          if (!(selectionSort(vertice, valorVertice)))
+          {
+            vertice[contadorVertice] = valorVertice;
+            contadorVertice++;
+          }
+
+
+        }
       }
     }
 
-    return contador;
-
+    int tam = qtdElementosArray(vertice);
+    file.Close();
+    return tam;
   }
 
   public static void Main()
   {
 
-    System.Console.WriteLine("Insira o Grafo !");
-    System.Console.WriteLine("Insira os Vértices do Grafo Exemplo = {1,2,3,4}");
-    String? v = Convert.ToString(Console.ReadLine());
-    System.Console.WriteLine("Inira as Arestas/Relação do Grafo = (Represente como {{1,2}} - Não Direcionado ou {(1,2)} Grafo Direcionado ! ");
-    String? graph = Convert.ToString(Console.ReadLine());
+    using var file = new StreamReader("./graph.txt");
+    String? linha;
+    bool criouMatriz = false;
+    int tamanhoMatriz = 0;
+    //class
+    matrizadj ma = new matrizadj();
 
-    if (graph != null)
+    while ((linha = file.ReadLine()) != null)
     {
-      bool direcioada = eDirecionada(graph);
+
+      if (linha == "Adj")
+      {
+        if (!criouMatriz)
+        {
+          tamanhoMatriz = contarTam();
+          ma.criarMatrizAdj(tamanhoMatriz);
+          criouMatriz = true;
+        }
+
+        String? linha2;
+        while ((linha2 = file.ReadLine()) != "fim")
+        {
+          if (linha2 != null && (!linha2.Equals("n  m")))
+          {
+            ma.receberDados(linha2, tamanhoMatriz);
+          }
+
+        }
+
+        ma.imprimirMatrizAdj(tamanhoMatriz);
+      }
+
     }
 
+    file.Close();
 
 
   }

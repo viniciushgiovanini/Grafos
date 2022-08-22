@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj": {}
+    "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Grafos-Repo\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj": {}
   },
   "projects": {
-    "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj": {
+    "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Grafos-Repo\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj",
+        "projectUniqueName": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Grafos-Repo\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj",
         "projectName": "Exercício2_Matriz_de_Incidencia",
-        "projectPath": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj",
+        "projectPath": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Grafos-Repo\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\Exercício2_Matriz_de_Incidencia.csproj",
         "packagesPath": "C:\\Users\\Viny\\.nuget\\packages\\",
-        "outputPath": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\obj\\",
+        "outputPath": "E:\\PASTAS_AREA_DE_TRABALHO\\Faculdade_4_Periodo\\TGC\\Grafos-Repo\\Atividades Não Avaliativas\\Exercício2_Matriz_de_Incidencia\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Viny\\AppData\\Roaming\\NuGet\\NuGet.Config"
