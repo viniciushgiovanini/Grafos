@@ -14,7 +14,9 @@
 ## Resultado
 
 - A primeira tarefa foi feita no papel.
-- A segunda não foi concluida, comecei a tentar fazer o **Grafo de incidência Não Direcionado**.
+- Foi implementado os 2 métodos:  
+  - Por Adjacência está **100% funcional**.  
+  - Por Incidência está funcional mas precisa fazer correção no papel para tirar parâmetro.  
 
 ## Linguagem
 
