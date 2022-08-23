@@ -1,4 +1,4 @@
-Adj
+Inci
 n  m
 1  2
 2  4

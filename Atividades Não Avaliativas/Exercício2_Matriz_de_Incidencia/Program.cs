@@ -77,26 +77,43 @@ class Program
     return tam;
   }
 
+  private static int contarTamArestas()
+  {
+    using var file = new StreamReader("./graph.txt");
+    String? LinhaTam;
+    int contador = 0;
+    while ((LinhaTam = file.ReadLine()) != "fim")
+    {
+      if (LinhaTam != null && LinhaTam != "n  m" && LinhaTam != "Inci")
+      {
+        contador++;
+      }
+    }
+    return contador;
+  }
+
   public static void Main()
   {
 
     using var file = new StreamReader("./graph.txt");
     String? linha;
-    bool criouMatriz = false;
+    bool criouMatrizAdj = false;
+    bool criouMatrizInci = false;
     int tamanhoMatriz = 0;
     //class
     matrizadj ma = new matrizadj();
+    matrizIncidencia mi = new matrizIncidencia();
 
     while ((linha = file.ReadLine()) != null)
     {
 
       if (linha == "Adj")
       {
-        if (!criouMatriz)
+        if (!criouMatrizAdj)
         {
           tamanhoMatriz = contarTam();
           ma.criarMatrizAdj(tamanhoMatriz);
-          criouMatriz = true;
+          criouMatrizAdj = true;
         }
 
         String? linha2;
@@ -111,6 +128,30 @@ class Program
 
         ma.imprimirMatrizAdj(tamanhoMatriz);
       }
+      else if (linha == "Inci")
+      {
+        int qtdArestas = 0;
+        int qtdVertices = 0;
+        if (!criouMatrizInci)
+        {
+          qtdArestas = contarTamArestas();
+          qtdVertices = contarTam();
+          mi.criarMatrizInci(qtdVertices, qtdArestas);
+          criouMatrizInci = true;
+        }
+
+        String? linha2;
+        while ((linha2 = file.ReadLine()) != "fim")
+        {
+          if (linha2 != null && (!linha2.Equals("n  m")))
+          {
+            mi.receberDados(linha2);
+          }
+
+        }
+
+        mi.imprimirMatrizInci(qtdArestas, qtdVertices);
+      }
 
     }
 
@@ -119,3 +160,15 @@ class Program
 
   }
 }
+
+// Adj
+// n  m
+// 1  2
+// 2  4
+// 2  5
+// 3  1
+// 3  2
+// 4  3
+// 4  5
+// 5  0
+// fim
