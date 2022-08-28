@@ -8,6 +8,10 @@ path = './database/'
 #Pegando Argumento do Command Line
 fileName = sys.argv[1]
 dirname = os.path.dirname(path)
-pathConcat = dirname + '/' + fileName
+pathConcat = dirname + '/' + fileName + '.txt'
 
-print(pathConcat)
+with open(pathConcat) as file:
+  linha = file.readlines()
+  
+
+print(linha)
