@@ -1,3 +1,8 @@
+#Implementação Predecessores
+#Agora tem que fazer a mesma coisa com predecessores, aproveitar a função, quando ele limpar a linha e for adicionar o sucessor
+#ele vai na posicao e adiciona o predecessor, se ja estiver um nó de predecessor ele vai ter que pecorrer o objeto ate achar
+#o none e implementar ele lá
+
 #imports
 import sys
 import os.path
@@ -16,6 +21,7 @@ class myVerticePrede:
 
 #Lista variavel Global
 myListSucesso = []
+myListPredecesso = []
 verticeLidoAnterior = None
 
 
@@ -37,15 +43,23 @@ def mudouVertice(rSplit):
     verticeLidoAnterior = rSplit
     return mudou
 
-def fazerPesquisaCriarSuce(objA, newObj):
+# def fazerPesquisaCriarSuce(objA, newObj):
+#   if objA.sucessor == None:
+#     objA.sucessor = newObj
+#     return
+#   else:
+#     fazerPesquisaCriarSuce(objA.sucessor, newObj)
+
+#Tem que mudar esse método para aceitar predecessores
+def fazerPesquisaCriar(objA, newObj):
   if objA.sucessor == None:
     objA.sucessor = newObj
     return
   else:
-    fazerPesquisaCriarSuce(objA.sucessor, newObj)
+    fazerPesquisaCriar(objA.sucessor, newObj)
 
-
-def criarListaSucessores(rSplit):
+#Tem que mudar esse método para aceitar predecessores
+def criarLista(rSplit):
   
   mudouV = mudouVertice(rSplit[0])
 
@@ -63,7 +77,7 @@ def criarListaSucessores(rSplit):
     suce.vPrinci = rSplit[1]        
     tamList = len(myListSucesso)
     objetoAnterior = myListSucesso[tamList-1]
-    fazerPesquisaCriarSuce(objetoAnterior, suce)
+    fazerPesquisaCriar(objetoAnterior, suce)
   else:
     newRaiz = myVerticeSuce()
     newSuce = myVerticeSuce()
@@ -112,7 +126,7 @@ with open(pathConcat) as file:
 for i in range(1, len(linha)):
   removeSpace = linha[i].strip()
   splits = removeSpace.split()
-  criarListaSucessores(splits)
+  criarLista(splits)
 
 #Imprime Lista de Sucessores
 pesquisarVerticeImprimirSucessores(str(verticeInput))
