@@ -14,4 +14,5 @@ with open(pathConcat) as file:
   linha = file.readlines()
   
 
-print(linha)
+#Limpa a linha e deixa pronto para utilizar os valores
+print(linha[0].strip())
