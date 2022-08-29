@@ -1,29 +1,96 @@
 #imports
+from ast import If
 import sys
 import os.path
 
 #setando o path
 path = './database/'
 
+#Criando a Class
+class myVerticeSuce:
+  sucessor = None
+  vPrinci = None
 
+class myVerticePrede:
+  VPrinci = None
+  antecessor = None
+
+#Lista variavel Global
+myListSucesso = []
+verticeLidoAnterior = None
 #func
-def criarLista(rString):
-  print(rString)
+
+def mudouVertice(rSplit):
+  global verticeLidoAnterior
+  
+  
+  if verticeLidoAnterior == None:
+    mudou = "notInit"   
+    verticeLidoAnterior = rSplit
+    return mudou
+  elif verticeLidoAnterior == rSplit:
+    mudou = False  
+    verticeLidoAnterior = rSplit  
+    return mudou
+  else:
+    mudou = True    
+    verticeLidoAnterior = rSplit
+    return mudou
+
+def fazerPesquisa(objA, newObj):
+  if objA.sucessor == None:
+    objA.sucessor = newObj
+    return
+  else:
+    fazerPesquisa(objA.sucessor, newObj)
 
 
+def criarListaSucessores(rSplit):
+  
+  mudouV = mudouVertice(rSplit[0])
+
+  if mudouV == "notInit":
+    raiz = myVerticeSuce()
+    suce = myVerticeSuce()
+    raiz.vPrinci = rSplit[0]
+    
+    suce.vPrinci = rSplit[1]
+    suce.sucessor = None
+    raiz.sucessor = suce
+    myListSucesso.append(raiz)
+  elif mudouV == False:
+    suce = myVerticeSuce()
+    suce.vPrinci = rSplit[1]        
+    tamList = len(myListSucesso)
+    objetoAnterior = myListSucesso[tamList-1]
+    fazerPesquisa(objetoAnterior, suce)
+  else:
+    newRaiz = myVerticeSuce()
+    newSuce = myVerticeSuce()
+    newRaiz.vPrinci = rSplit[0]
+    newSuce.vPrinci = rSplit[1]
+    newRaiz.sucessor = newSuce
+    myListSucesso.append(newRaiz)
+
+   
+  
+     
+    
+
+  print(rSplit)
 
 #Pegando Argumento do Command Line
-fileName = sys.argv[1]
-dirname = os.path.dirname(path)
-verticeInput = sys.argv[2]
+# fileName = sys.argv[1]
+# dirname = os.path.dirname(path)
+# verticeInput = sys.argv[2]
 
 #Testa se Tem .txt no campo do nome do arquivo
-if ".txt" in fileName:
-  pathConcat = dirname + '/' + fileName
-else:
-  pathConcat = dirname + '/' + fileName + ".txt"
+# if ".txt" in fileName:
+#   pathConcat = dirname + '/' + fileName
+# else:
+#   pathConcat = dirname + '/' + fileName + ".txt"
 
-with open(pathConcat) as file:
+with open(".\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt") as file:
   linha = file.readlines()
 
 
@@ -31,5 +98,5 @@ with open(pathConcat) as file:
 for i in range(1, len(linha)):
   removeSpace = linha[i].strip()
   splits = removeSpace.split()
-  criarLista(splits)
+  criarListaSucessores(splits)
 
