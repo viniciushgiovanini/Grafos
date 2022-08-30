@@ -17,15 +17,24 @@ class myVerticeSuce:
 
 class myVerticePrede:
   VPrinci = None
-  antecessor = None
+  predecessor = None
 
 #Lista variavel Global
 myListSucesso = []
 myListPredecesso = []
 verticeLidoAnterior = None
+elementPosiLS = 0
+elementPosiLP = 0
 
 
 #func
+def initListas(tamSuce, tamPrede):
+  global myListPredecesso
+  global myListSucesso
+  myListSucesso = [None] * tamSuce
+  myListPredecesso = [None] * tamPrede
+
+
 def mudouVertice(rSplit):
   global verticeLidoAnterior
   
@@ -60,10 +69,13 @@ def fazerPesquisaCriar(objA, newObj):
 
 #Tem que mudar esse método para aceitar predecessores
 def criarLista(rSplit):
-  
+  global elementPosiLP
+  global elementPosiLS
   mudouV = mudouVertice(rSplit[0])
 
   if mudouV == "notInit":
+
+    #Criando Lista de Sucessores
     raiz = myVerticeSuce()
     suce = myVerticeSuce()
     raiz.vPrinci = rSplit[0]
@@ -71,7 +83,20 @@ def criarLista(rSplit):
     suce.vPrinci = rSplit[1]
     suce.sucessor = None
     raiz.sucessor = suce
-    myListSucesso.append(raiz)
+    myListSucesso.insert(elementPosiLS, raiz)
+    elementPosiLP += 1
+    
+    #Criando Lista de Predecessores
+    raizPrede = myVerticePrede()
+    prede = myVerticePrede()
+    raizPrede.VPrinci = rSplit[1]
+    prede.VPrinci = rSplit[0]
+    raizPrede.predecessor = prede
+    
+    #Alocando a lista de predessor na posição desejada da lista
+    posi = rSplit[1]
+    myListPredecesso.insert(int(posi)-1, raizPrede)   
+      
   elif mudouV == False:
     suce = myVerticeSuce()
     suce.vPrinci = rSplit[1]        
@@ -84,7 +109,8 @@ def criarLista(rSplit):
     newRaiz.vPrinci = rSplit[0]
     newSuce.vPrinci = rSplit[1]
     newRaiz.sucessor = newSuce
-    myListSucesso.append(newRaiz)
+    myListSucesso.insert(elementPosiLS,newRaiz)
+    elementPosiLS += 1
 
 def recPesquisaSuce(objimprimir, sucessores):
   if objimprimir.vPrinci != None:
@@ -106,27 +132,37 @@ def pesquisarVerticeImprimirSucessores(vPesquisa):
     
 
 #Pegando Argumento do Command Line
-fileName = sys.argv[1]
-dirname = os.path.dirname(path)
-verticeInput = sys.argv[2]
+# fileName = sys.argv[1]
+# dirname = os.path.dirname(path)
+# verticeInput = sys.argv[2]
 
 
 # Testa se Tem .txt no campo do nome do arquivo
-if ".txt" in fileName:
-  pathConcat = dirname + '/' + fileName
-else:
-  pathConcat = dirname + '/' + fileName + ".txt"
+# if ".txt" in fileName:
+#   pathConcat = dirname + '/' + fileName
+# else:
+#   pathConcat = dirname + '/' + fileName + ".txt"
 
 #.\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt
-with open(pathConcat) as file:
+# pathConcat
+with open(".\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt") as file:
   linha = file.readlines()
 
 
 #Limpa a linha e deixa pronto para utilizar os valores
-for i in range(1, len(linha)):
+#len(linha)
+travaLoop = False
+for i in range(0, len(linha)-1):
   removeSpace = linha[i].strip()
   splits = removeSpace.split()
-  criarLista(splits)
-
+  if travaLoop == False:
+    initListas(int(splits[0]), int(splits[1]))
+    travaLoop = True
+  else:
+    criarLista(splits)
+  
+  
+  
+# print(myListPredecesso[9].vPrinci)
 #Imprime Lista de Sucessores
-pesquisarVerticeImprimirSucessores(str(verticeInput))
+pesquisarVerticeImprimirSucessores(str(1))
