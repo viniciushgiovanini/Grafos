@@ -19,6 +19,8 @@ myListSucesso = []
 myListPredecesso = []
 verticeLidoAnterior = None
 elementPosiLP = 0
+gEntrada = 0
+gSaida = 0
 
 
 #func
@@ -57,7 +59,6 @@ def sucessorExistente(value):
     resp = True       
   return resp 
 
-#Tem que mudar esse método para aceitar predecessores
 def fazerPesquisaCriar(objA, newObj):
   if objA.sucessor == None:
     objA.sucessor = newObj
@@ -72,7 +73,6 @@ def fazerPesquisaCriarPred(objA, newObj):
   else:
     fazerPesquisaCriarPred(objA.predecessor, newObj)
 
-#Tem que mudar esse método para aceitar predecessores
 def criarLista(rSplit):
   global elementPosiLP 
   mudouV = mudouVertice(rSplit[0])
@@ -139,6 +139,7 @@ def recPesquisaSuce(objimprimir, sucessores):
     
 
 def pesquisarVerticeImprimirSucessores(vPesquisa):
+   global gEntrada
    objimprimir = myListSucesso[int(vPesquisa)-1]
    sucessores = []
    existSuce = sucessorExistente(int(vPesquisa))
@@ -151,6 +152,7 @@ def pesquisarVerticeImprimirSucessores(vPesquisa):
      print("")
    else:
       print("Vertice não Existente (Sucessores)")
+   gEntrada = len(sucessores)
    
 
 def recPesquisaPred(objimprimir, predecessores):
@@ -162,6 +164,7 @@ def recPesquisaPred(objimprimir, predecessores):
     return
 
 def pesquisarVerticeImprimirPred(vPesquisa):
+   global gSaida
    objimprimir = myListPredecesso[int(vPesquisa)-1]
    Predecessores = []
    existPred = predecessorExistente(int(vPesquisa))
@@ -173,6 +176,7 @@ def pesquisarVerticeImprimirPred(vPesquisa):
      print("")
    else:
       print("Vértice não Existente (Predecessores)")
+   gSaida = len(Predecessores) 
    
 
 #Pegando Argumento do Command Line
@@ -187,14 +191,14 @@ if ".txt" in fileName:
 else:
   pathConcat = dirname + '/' + fileName + ".txt"
 
-#.\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt
-# pathConcat
+#Leitura do path
 with open(pathConcat) as file:
   linha = file.readlines()
 
 
+print("Processando...")
+
 #Limpa a linha e deixa pronto para utilizar os valores
-#len(linha)
 travaLoop = False
 for i in range(0, len(linha)-1):
   removeSpace = linha[i].strip()
@@ -204,11 +208,11 @@ for i in range(0, len(linha)-1):
     travaLoop = True
   else:
     criarLista(splits)
-  
-  
-  
-# print(myListPredecesso[9].vPrinci)
-#Imprime Lista de Sucessores
+
+#Imprime Lista de Sucessores Predecessores e Grau de Entrada e Saida
 pesquisarVerticeImprimirSucessores(verticeInput)
 print("--X--")
 pesquisarVerticeImprimirPred(verticeInput)
+print("--X--")
+print("Grau de Entrada: " + str(gEntrada))
+print("Grau de Saida: " + str(gSaida))
