@@ -1,8 +1,3 @@
-#Implementação Predecessores
-#Agora tem que fazer a mesma coisa com predecessores, aproveitar a função, quando ele limpar a linha e for adicionar o sucessor
-#ele vai na posicao e adiciona o predecessor, se ja estiver um nó de predecessor ele vai ter que pecorrer o objeto ate achar
-#o none e implementar ele lá
-
 #imports
 import sys
 import os.path
@@ -23,17 +18,13 @@ class myVerticePrede:
 myListSucesso = []
 myListPredecesso = []
 verticeLidoAnterior = None
-elementPosiLS = 0
 elementPosiLP = 0
 
 
 #func
-def initListas(tamSuce, tamPrede):
-  global myListPredecesso
-  global myListSucesso
-  myListSucesso = [None] * tamSuce
-  myListPredecesso = [None] * tamPrede
-
+def initListas(tamPrede):
+  global myListPredecesso 
+  myListPredecesso = [None] * (tamPrede-1)
 
 def mudouVertice(rSplit):
   global verticeLidoAnterior
@@ -52,12 +43,19 @@ def mudouVertice(rSplit):
     verticeLidoAnterior = rSplit
     return mudou
 
-# def fazerPesquisaCriarSuce(objA, newObj):
-#   if objA.sucessor == None:
-#     objA.sucessor = newObj
-#     return
-#   else:
-#     fazerPesquisaCriarSuce(objA.sucessor, newObj)
+def predecessorExistente(value):
+   resp = False
+   valorDaLista = myListPredecesso[value-1]
+   if valorDaLista != None:
+     resp = True       
+   return resp 
+
+def sucessorExistente(value):
+  resp = False
+  valorDaLista = myListSucesso[value-1]
+  if valorDaLista != None:
+    resp = True       
+  return resp 
 
 #Tem que mudar esse método para aceitar predecessores
 def fazerPesquisaCriar(objA, newObj):
@@ -67,10 +65,16 @@ def fazerPesquisaCriar(objA, newObj):
   else:
     fazerPesquisaCriar(objA.sucessor, newObj)
 
+def fazerPesquisaCriarPred(objA, newObj):
+  if objA.predecessor == None:
+    objA.predecessor = newObj
+    return
+  else:
+    fazerPesquisaCriarPred(objA.predecessor, newObj)
+
 #Tem que mudar esse método para aceitar predecessores
 def criarLista(rSplit):
-  global elementPosiLP
-  global elementPosiLS
+  global elementPosiLP 
   mudouV = mudouVertice(rSplit[0])
 
   if mudouV == "notInit":
@@ -83,8 +87,7 @@ def criarLista(rSplit):
     suce.vPrinci = rSplit[1]
     suce.sucessor = None
     raiz.sucessor = suce
-    myListSucesso.insert(elementPosiLS, raiz)
-    elementPosiLP += 1
+    myListSucesso.append(raiz)    
     
     #Criando Lista de Predecessores
     raizPrede = myVerticePrede()
@@ -96,21 +99,35 @@ def criarLista(rSplit):
     #Alocando a lista de predessor na posição desejada da lista
     posi = rSplit[1]
     myListPredecesso.insert(int(posi)-1, raizPrede)   
+    
       
   elif mudouV == False:
     suce = myVerticeSuce()
     suce.vPrinci = rSplit[1]        
     tamList = len(myListSucesso)
     objetoAnterior = myListSucesso[tamList-1]
-    fazerPesquisaCriar(objetoAnterior, suce)
+    fazerPesquisaCriar(objetoAnterior, suce)    
   else:
     newRaiz = myVerticeSuce()
     newSuce = myVerticeSuce()
     newRaiz.vPrinci = rSplit[0]
     newSuce.vPrinci = rSplit[1]
     newRaiz.sucessor = newSuce
-    myListSucesso.insert(elementPosiLS,newRaiz)
-    elementPosiLS += 1
+    myListSucesso.append(newRaiz)
+  #Implementar na Lista de Predecessores
+  if mudouV != 	"notInit":
+      predExist = predecessorExistente(int(rSplit[1]))
+      if predExist:
+       pred = myVerticePrede()
+       pred.VPrinci = rSplit[0]
+       fazerPesquisaCriarPred(myListPredecesso[(int(rSplit[1])-1)], pred)
+      else:
+       newRaiz = myVerticePrede()
+       pred = myVerticePrede()
+       pred.VPrinci = rSplit[0]
+       newRaiz.VPrinci = rSplit[1]
+       newRaiz.predecessor = pred
+       myListPredecesso[(int(rSplit[1])-1)] = newRaiz
 
 def recPesquisaSuce(objimprimir, sucessores):
   if objimprimir.vPrinci != None:
@@ -124,28 +141,55 @@ def recPesquisaSuce(objimprimir, sucessores):
 def pesquisarVerticeImprimirSucessores(vPesquisa):
    objimprimir = myListSucesso[int(vPesquisa)-1]
    sucessores = []
-   print("Vertice Principal: " + vPesquisa)
-   recPesquisaSuce(objimprimir, sucessores)
-   print("Sucessores: ")
-   for i in sucessores:
-    print("[" + i + "]", end='')
-    
+   existSuce = sucessorExistente(int(vPesquisa))
+   if existSuce:
+     print("Vertice Principal: " + vPesquisa)
+     recPesquisaSuce(objimprimir, sucessores)
+     print("Sucessores: ")
+     for i in sucessores:
+      print("[" + i + "]", end='')
+     print("")
+   else:
+      print("Vertice não Existente (Sucessores)")
+   
+
+def recPesquisaPred(objimprimir, predecessores):
+  if objimprimir.VPrinci != None:
+    if objimprimir.predecessor != None:
+      predecessores.append(objimprimir.predecessor.VPrinci)
+      recPesquisaPred(objimprimir.predecessor, predecessores)
+  else:
+    return
+
+def pesquisarVerticeImprimirPred(vPesquisa):
+   objimprimir = myListPredecesso[int(vPesquisa)-1]
+   Predecessores = []
+   existPred = predecessorExistente(int(vPesquisa))
+   if existPred:
+     recPesquisaPred(objimprimir, Predecessores)
+     print("Predecessores: ")
+     for i in Predecessores:
+      print("[" + i + "]", end='')
+     print("")
+   else:
+      print("Vértice não Existente (Predecessores)")
+   
 
 #Pegando Argumento do Command Line
-# fileName = sys.argv[1]
-# dirname = os.path.dirname(path)
-# verticeInput = sys.argv[2]
+fileName = sys.argv[1]
+dirname = os.path.dirname(path)
+verticeInput = sys.argv[2]
 
 
 # Testa se Tem .txt no campo do nome do arquivo
-# if ".txt" in fileName:
-#   pathConcat = dirname + '/' + fileName
-# else:
-#   pathConcat = dirname + '/' + fileName + ".txt"
+if ".txt" in fileName:
+  pathConcat = dirname + '/' + fileName
+else:
+  pathConcat = dirname + '/' + fileName + ".txt"
 
 #.\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt
 # pathConcat
-with open(".\Atividade Avaliativas\Representacao_de_Grafo\database\dataTeste.txt") as file:
+with open(pathConcat) as file:
   linha = file.readlines()
 
 
@@ -156,7 +200,7 @@ for i in range(0, len(linha)-1):
   removeSpace = linha[i].strip()
   splits = removeSpace.split()
   if travaLoop == False:
-    initListas(int(splits[0]), int(splits[1]))
+    initListas(int(splits[1]))
     travaLoop = True
   else:
     criarLista(splits)
@@ -165,4 +209,6 @@ for i in range(0, len(linha)-1):
   
 # print(myListPredecesso[9].vPrinci)
 #Imprime Lista de Sucessores
-pesquisarVerticeImprimirSucessores(str(1))
+pesquisarVerticeImprimirSucessores(verticeInput)
+print("--X--")
+pesquisarVerticeImprimirPred(verticeInput)
