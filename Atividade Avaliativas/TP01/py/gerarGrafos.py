@@ -1,16 +1,11 @@
 #imports
 import random
 import os
-import pathlib
 
 class criarGrafos:
 
   #funcoes globais  
-  def gerarArestas(self, tamReq):
-   valorrr = random.randint(1, tamReq)
-   return valorrr 
-   
- #------------------------------------------
+  #------------------------------------------
   #funcoes do grafo Euleriano  
   
   def verificarARQGrafofEuleriano(self):
@@ -21,27 +16,32 @@ class criarGrafos:
     return resp
   
   
-  def gerarVerticesEulerianos(self, cont, qtd, tamReq, obj):
+  def gerarVerticesEulerianos(self, cont, qtd, obj, listaRR):
     cont2 = 0
-    listaRR = []
+    
     while(cont2 < qtd):
       # Salvar cont no arquivo e numero sorteado
-      numeroPresentenaLista = False
+      if len(listaRR) != 0: 
+       destinoAresta = listaRR[0]
+       listaRR.remove(destinoAresta)
+      else:
+       destinoAresta = 1
+    
+      marcadorLaco = False
+      if destinoAresta == cont:
+        marcadorLaco = True
+        qtd = qtd + 1
+        
+       
+       
       
-      while(numeroPresentenaLista == False):
-       destinoAresta = self.gerarArestas(tamReq)
-       if not destinoAresta in listaRR:
-         numeroPresentenaLista = True
-         listaRR.append(destinoAresta)
-         
-       
-       
-       
-      stringMontada = str(cont) + " " + str(destinoAresta)
-      obj.write(stringMontada + "\n")
+      if not marcadorLaco:
+       stringMontada = str(cont) + " " + str(destinoAresta)
+       obj.write(stringMontada + "\n")  
+      
       stringMontada = ""     
       cont2 = cont2 + 1
-    listaRR = []  
+    # listaRR = []  
       
     
       
@@ -56,12 +56,13 @@ class criarGrafos:
     if (arquivoExiste == False):
       oPP = open("data/grafosEulerianos.txt", 'wb+')
       oPP.close()
-      
+    else:
+      open("data/grafosEulerianos.txt", 'w').close()
+            
     
     obj = open("data/grafosEulerianos.txt", 'r+')
     
-    obj.write(' ' + "\n")
-    obj.write(str(tamReq) + "\n")
+    
     
     cont = 1
     #  qtd = random.randrange(1, 11, 2)
@@ -70,13 +71,27 @@ class criarGrafos:
      qtd = 4
     else:
      if tamReq == 1000000:
-      qtd = 20
+      qtd = 2
+    
+    # referente as duas linhas salvas la em cima
+    qtdLinhas = 2 + (qtd * int(tamReq))
+    obj.write(str(tamReq) + "_" + str(qtdLinhas) + "\n")
         
-      
-
+    listaRR = []
+    listaRang = range(1, tamReq+1)
+    for item in listaRang:
+     listaRR.append(item)
+     listaRR.insert(0,item)
+    
+    random.shuffle(listaRR)
+    
+    
+    
     while cont <= tamReq:
-     self.gerarVerticesEulerianos(cont, qtd, tamReq, obj)     
+     self.gerarVerticesEulerianos(cont, qtd, obj, listaRR)     
      cont = cont + 1
+    
+    
     obj.close()  
   
   # def criarSemiEulerianos():
