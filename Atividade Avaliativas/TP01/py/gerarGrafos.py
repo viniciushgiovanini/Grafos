@@ -48,19 +48,22 @@ class criarGrafos:
 
 
 
-  def criarEulerianos(self,tamReq):
+  def criarEulerianos(self,tamReq, nomeArq):
     
     # Verificar se o arquivo existe
     arquivoExiste = self.verificarARQGrafofEuleriano()
     
+    
+    strInterpolacao = 'data/grafosEulerianos/' + nomeArq + '.txt'    
+    
     if (arquivoExiste == False):
-      oPP = open("data/grafosEulerianos.txt", 'wb+')
+      oPP = open(strInterpolacao, 'wb+')
       oPP.close()
     else:
-      open("data/grafosEulerianos.txt", 'w').close()
+      open(strInterpolacao, 'w').close()
             
     
-    obj = open("data/grafosEulerianos.txt", 'r+')
+    obj = open(strInterpolacao, 'r+')
     
     
     

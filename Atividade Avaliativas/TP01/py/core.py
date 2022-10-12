@@ -1,5 +1,4 @@
 #imports
-from re import match
 from gerarGrafos import criarGrafos
 import time
 start = time.perf_counter()
@@ -19,8 +18,9 @@ while(vLoop):
     numeroCase2 = input("Insira a letra desejada: ")
     if numeroCase2 == "a":
       tamGrafo = int(input("Insira o tamanho do grafo euleriano desejado (100, 1000 ou 100.000): "))
+      nomeArquivo = str(input("Insira o nome do Arquivo TXT: "))
       gEule = criarGrafos()
-      class1 = gEule.criarEulerianos(tamGrafo)
+      class1 = gEule.criarEulerianos(tamGrafo, nomeArquivo)
     elif numeroCase2 == "b":
       pass
     elif numeroCase2 == "c":
