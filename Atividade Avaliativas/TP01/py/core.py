@@ -25,7 +25,7 @@ while(vLoop):
       end = time.perf_counter()
       print(end - start)
     elif numeroCase2 == "b":
-     tamGrafo = int(input("Insira o tamanho do grafo euleriano desejado (100, 1000 ou 100.000): "))
+     tamGrafo = int(input("Insira o tamanho do grafo NÃO euleriano desejado (100, 1000 ou 100.000): "))
      nomeArquivo = str(input("Insira o nome do Arquivo TXT: "))
      #  chamar funcao grafo semi euleriano
      gEule = criarGrafos()
@@ -34,7 +34,14 @@ while(vLoop):
      end = time.perf_counter()
      print(end - start)
     elif numeroCase2 == "c":
-      pass
+     tamGrafo = int(input("Insira o tamanho do grafo SEMI euleriano desejado (100, 1000 ou 100.000): "))
+     nomeArquivo = str(input("Insira o nome do Arquivo TXT: "))
+     gEule = criarGrafos()
+     start = time.perf_counter()
+     class1 = gEule.criarSemiEulerianos(tamGrafo, nomeArquivo) 
+     end = time.perf_counter()
+     print(end - start)
+      
     else:
       print("Valor inserido não existe !")    
   else:

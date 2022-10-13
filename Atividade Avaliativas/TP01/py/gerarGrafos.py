@@ -193,6 +193,81 @@ class criarGrafos:
     obj.close()
     
     
-  def criarSemiEulerianos():
-    pass   
+  def criarSemiEulerianos(self, qtdVertice, nomeArq):
+  # Verificar se o arquivo existe
+    strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
+    arquivoExiste = self.isPath(strInterpolacao)   
+        
+    
+    if (arquivoExiste == False):
+      oPP = open(strInterpolacao, 'wb+')
+      oPP.close()
+    else:
+      open(strInterpolacao, 'w').close()
+            
+    
+    obj = open(strInterpolacao, 'r+')
+    
+    
+    
+    
+    #  grau = random.randrange(1, 11, 2)
+    grau = 4
+    grau2 = grau - (grau-1)
+    # grauDivisaoLinha = 1
+    if qtdVertice == 1000:
+     grau = 4
+    #  grauDivisaoLinha = 10
+    elif qtdVertice == 100000:
+      grau = 2
+      grau2 = 1
+      # grauDivisaoLinha = 1000
+    
+    
+    # referente as duas linhas salvas la em cima
+    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-grau2) * 2))
+    obj.write(str(qtdVertice) + "_" + str(qtdLinhas) + "\n")
+        
+    listaRR = []
+    listaRang= range(1, qtdVertice+1)
+    for item in listaRang:
+     listaRR.append(item)
+  
+    concatCont = 0
+    while (concatCont < grau-1):
+      listaRR = listaRR + listaRR
+      concatCont = concatCont + 1
+      
+    random.shuffle(listaRR)
+    
+    
+    
+    cont2Chega = qtdVertice/10
+    cont = 1
+    cont2 = 1
+    isGrau2 = False
+    temp = -1
+    contSemiEule = 0
+    
+    while cont <= qtdVertice:
+      
+      if cont2 == cont2Chega and cont2Chega != 0 and contSemiEule < 2:
+        temp = grau
+        grau = grau2
+        cont2 = 0
+        isGrau2 = True
+        contSemiEule = contSemiEule + 1
+      
+      
+      
+      self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
+      cont2 = cont2 + 1
+      cont = cont + 1
+      
+      if isGrau2:
+        grau = temp
+        isGrau2 = False
+    
+    
+    obj.close()   
   
