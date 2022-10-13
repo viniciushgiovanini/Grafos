@@ -68,15 +68,17 @@ class criarGrafos:
     
     
     #  grau = random.randrange(1, 11, 2)
+    
     grau = 4
+    grau2 = grau-2
     if tamReq == 1000:
      grau = 4
-    elif tamReq == 1000000:
+    elif tamReq == 100000:
       grau = 2
+      grau2 = 2
     
     # referente as duas linhas salvas la em cima
-    cont2Chega = tamReq/10
-    qtdLinhas = 1 + ((grau * int(tamReq)) - ((grau-2) * int(cont2Chega)))
+    qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
     obj.write(str(tamReq) + "_" + str(qtdLinhas) + "\n")
         
     listaRR = []
@@ -92,8 +94,8 @@ class criarGrafos:
     random.shuffle(listaRR)
     
     
+    cont2Chega = tamReq/10
     
-    grau2 = grau-2
     cont = 1
     cont2 = 1
     isGrau2 = False
@@ -139,14 +141,17 @@ class criarGrafos:
     
     #  grau = random.randrange(1, 11, 2)
     grau = 4
+    # grauDivisaoLinha = 1
     if qtdVertice == 1000:
      grau = 4
-    elif qtdVertice == 1000000:
+    #  grauDivisaoLinha = 10
+    elif qtdVertice == 100000:
       grau = 2
+      # grauDivisaoLinha = 1000
     
+    grau2 = grau - (grau-1)
     # referente as duas linhas salvas la em cima
-    cont2Chega = qtdVertice/10
-    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-2) * int(cont2Chega)))
+    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-grau2) * int(qtdVertice/(qtdVertice/10))))
     obj.write(str(qtdVertice) + "_" + str(qtdLinhas) + "\n")
         
     listaRR = []
@@ -163,7 +168,7 @@ class criarGrafos:
     
     
     
-    grau2 = grau - (grau-1)
+    cont2Chega = qtdVertice/10
     cont = 1
     cont2 = 1
     isGrau2 = False
