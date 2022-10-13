@@ -120,10 +120,10 @@ class criarGrafos:
     obj.close()  
 
   #------------------------------
-  # grafo semi euleriano
-  def criarSemiEulerianos(self, qtdVertice, nomeArq):
+  # grafo Nao euleriano
+  def criarNaoEulerianos(self, qtdVertice, nomeArq):
     # Verificar se o arquivo existe
-    strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
+    strInterpolacao = 'data/grafosNaoEulerianos/' + nomeArq + '.txt'
     arquivoExiste = self.isPath(strInterpolacao)   
         
     
@@ -193,6 +193,6 @@ class criarGrafos:
     obj.close()
     
     
-  # def criarNaoEulerianos():
-  #   pass   
+  def criarSemiEulerianos():
+    pass   
   

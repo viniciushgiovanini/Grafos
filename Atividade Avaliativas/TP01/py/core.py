@@ -14,7 +14,7 @@ while(vLoop):
     print("Encerrando o Programa")
     break
   elif numeroCase == 1:
-    print("a - Gerar grafo euleriano | b - gerar grafo semi euleriano | c - gerar grafo não euleriano")
+    print("a - Gerar grafo euleriano | b - gerar grafo não euleriano | c - gerar grafo semi euleriano")
     numeroCase2 = input("Insira a letra desejada: ")
     if numeroCase2 == "a":
       tamGrafo = int(input("Insira o tamanho do grafo euleriano desejado (100, 1000 ou 100.000): "))
@@ -30,7 +30,7 @@ while(vLoop):
      #  chamar funcao grafo semi euleriano
      gEule = criarGrafos()
      start = time.perf_counter()
-     class1 = gEule.criarSemiEulerianos(tamGrafo, nomeArquivo)
+     class1 = gEule.criarNaoEulerianos(tamGrafo, nomeArquivo)
      end = time.perf_counter()
      print(end - start)
     elif numeroCase2 == "c":
