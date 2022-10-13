@@ -1,8 +1,8 @@
 #imports
 from gerarGrafos import criarGrafos
 import time
-start = time.perf_counter()
-
+start = 0
+end = 0
 
 print("0 - Encerrar o Programa | 1 - Geração dos Grafos")
 numeroCase = int(input("Escreva o número desejado !\n"))
@@ -20,9 +20,17 @@ while(vLoop):
       tamGrafo = int(input("Insira o tamanho do grafo euleriano desejado (100, 1000 ou 100.000): "))
       nomeArquivo = str(input("Insira o nome do Arquivo TXT: "))
       gEule = criarGrafos()
+      start = time.perf_counter()
       class1 = gEule.criarEulerianos(tamGrafo, nomeArquivo)
+      end = time.perf_counter()
     elif numeroCase2 == "b":
-      pass
+     tamGrafo = int(input("Insira o tamanho do grafo euleriano desejado (100, 1000 ou 100.000): "))
+     nomeArquivo = str(input("Insira o nome do Arquivo TXT: "))
+     #  chamar funcao grafo semi euleriano
+     gEule = criarGrafos()
+     start = time.perf_counter()
+     class1 = gEule.criarSemiEulerianos(tamGrafo, nomeArquivo)
+     end = time.perf_counter()
     elif numeroCase2 == "c":
       pass
     else:
@@ -32,5 +40,4 @@ while(vLoop):
   print("0 - Encerrar o Programa | 1 - Geração dos Grafos")  
   numeroCase = int(input("Escreva o número desejado !\n"))
 
-end = time.perf_counter()
 print(end - start)

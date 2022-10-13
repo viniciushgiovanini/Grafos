@@ -118,53 +118,73 @@ class criarGrafos:
     obj.close()  
 
   #------------------------------
-  #  funcoes do grafo semi euleriano
-  
-  def gerarVerticesSemiEulerianos(cont, grauPar, grauImpar, obj, listaRR):
-    cont2 = 0
-    while (cont2 <= cont):
-      cont2 = cont2 + 1
-  
+  # grafo semi euleriano
   def criarSemiEulerianos(self, qtdVertice, nomeArq):
-    
-    strCaminho = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
-    arquivoExiste = self.isPath(strCaminho)
+    # Verificar se o arquivo existe
+    strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
+    arquivoExiste = self.isPath(strInterpolacao)   
+        
     
     if (arquivoExiste == False):
-      oPP = open(strCaminho, 'wb+')
+      oPP = open(strInterpolacao, 'wb+')
       oPP.close()
     else:
-      open(strCaminho, 'w').close()
+      open(strInterpolacao, 'w').close()
             
     
-    obj = open(strCaminho, 'r+')
+    obj = open(strInterpolacao, 'r+')
     
-    grau = 2
-    grau2 = 1
+    
+    
+    
+    #  grau = random.randrange(1, 11, 2)
+    grau = 4
     if qtdVertice == 1000:
      grau = 4
-     grau2 = 3
-    else:
-     if qtdVertice == 1000000:
-      grau = 6
-      grau2 = 5
+    elif qtdVertice == 1000000:
+      grau = 2
     
     # referente as duas linhas salvas la em cima
-    qtdLinhas = 2 + ((grau + grau2) * int(qtdVertice))
+    cont2Chega = qtdVertice/10
+    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-2) * int(cont2Chega)))
     obj.write(str(qtdVertice) + "_" + str(qtdLinhas) + "\n")
-    
-    
+        
     listaRR = []
-    listaRang = range(1, qtdVertice+1)
+    listaRang= range(1, qtdVertice+1)
     for item in listaRang:
      listaRR.append(item)
-     listaRR.insert(0,item)
-    
+  
+    concatCont = 0
+    while (concatCont < grau-1):
+      listaRR = listaRR + listaRR
+      concatCont = concatCont + 1
+      
     random.shuffle(listaRR)
+    
+    
+    
+    grau2 = grau - (grau-1)
     cont = 1
+    cont2 = 1
+    isGrau2 = False
+    temp = -1
     while cont <= qtdVertice:
-     self.gerarVerticesSemiEulerianos(cont, grau, grau2, obj, listaRR)     
-     cont = cont + 1
+      
+      if cont2 == cont2Chega and cont2Chega != 0:
+        temp = grau
+        grau = grau2
+        cont2 = 0
+        isGrau2 = True
+      
+      self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
+      cont2 = cont2 + 1
+      cont = cont + 1
+      
+      if isGrau2:
+        grau = temp
+        isGrau2 = False
+    
+    
     obj.close()
     
     
