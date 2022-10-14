@@ -192,7 +192,8 @@ class criarGrafos:
     
     obj.close()
     
-    
+  #-------------------------------
+  #grafo Semi Euleriano
   def criarSemiEulerianos(self, qtdVertice, nomeArq):
   # Verificar se o arquivo existe
     strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
