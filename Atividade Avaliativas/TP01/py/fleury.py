@@ -1,3 +1,4 @@
+import copy
 class fleuryAlg:
   
   def tratarLinha(self, item):
@@ -21,20 +22,23 @@ class fleuryAlg:
     return numerosTratados
     
     
-  def fleurynotIsEuleriano(self, listaNumber, listaGuardarVértice):
-      
+  def fleurynotIsEuleriano(self, listaNumber, listaGuardarVértice, listaSUPREME):
+    
    if len(listaGuardarVértice) == 0:
     listaGuardarVértice.append(listaNumber[0])
    elif listaGuardarVértice[0] == listaNumber[0]:
     listaGuardarVértice.append(listaNumber[0])
    elif listaGuardarVértice[0] != listaNumber[0]:
+    listaSUPREME.append(listaGuardarVértice)
     qtdV = len(listaGuardarVértice)
     listaGuardarVértice.clear()
     listaGuardarVértice.append(listaNumber[0])
     if qtdV % 2 != 0:
       return True
     
-    
+  
+  def fleuryPrinci(self, listaSUPREME, listaTMP):
+    pass
     
       
 
@@ -59,18 +63,25 @@ class fleuryAlg:
     
     # Variaveis Grafos Não eulerianos    
     listaGuardarVértice = [] #esse lista é apra guardar os vértices para testar se é euleriano
-    
+    # Fim variaveis grafos não eulerianos
+    listaVerticeeArestas = []
     for item in arquivinho:
+      
       if contadorpularPrimeiraLinha != 0:
         linhaTratada = self.tratarLinha(item)
-        isNotEulerian =  self.fleurynotIsEuleriano(linhaTratada, listaGuardarVértice)
+               
         
+        
+        # Testar se o grafo é Euleriano  
+        isNotEulerian =  self.fleurynotIsEuleriano(linhaTratada, listaGuardarVértice, listaVerticeeArestas)
         if isNotEulerian:
           print("\nEsse grafo NÃO é euleriano\n")
           return
-        
+      
+          
       else:
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
+    print(listaVerticeeArestas)
      
  
     
