@@ -24,17 +24,19 @@ class fleuryAlg:
     
   def fleurynotIsEuleriano(self, listaNumber, listaGuardarVértice, listaSUPREME):
     
+   listaSUPREME.append(listaNumber.copy())    
+    
    if len(listaGuardarVértice) == 0:
     listaGuardarVértice.append(listaNumber[0])
    elif listaGuardarVértice[0] == listaNumber[0]:
     listaGuardarVértice.append(listaNumber[0])
    elif listaGuardarVértice[0] != listaNumber[0]:
-    listaSUPREME.append(listaGuardarVértice)
     qtdV = len(listaGuardarVértice)
     listaGuardarVértice.clear()
     listaGuardarVértice.append(listaNumber[0])
     if qtdV % 2 != 0:
       return True
+   print(listaSUPREME)
     
   
   def fleuryPrinci(self, listaSUPREME, listaTMP):
