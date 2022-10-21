@@ -53,8 +53,6 @@ class fleuryAlg:
      listaListaNumber.append(list(listaNumber).copy())
      listaSUPREME.append(listaListaNumber.copy())
      listaListaNumber.clear()  
-   
-  #  print(listaSUPREME)
   
   def selecionandoMenorElemento(self, lista):
     resp = 10000000000000
@@ -66,6 +64,7 @@ class fleuryAlg:
     return listaResposta
   
   def analisandoFleury(self, listaSUPREME, qtdLinhas):
+    # Precisa colocar o naive aqui para identificar pontes.
     cont = 0
     destino = 0
     caminhoLista = []
