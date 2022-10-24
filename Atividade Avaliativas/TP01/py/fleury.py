@@ -1,3 +1,5 @@
+from naive import naivePonte
+
 class fleuryAlg:
   
   def tratarLinha(self, item):
@@ -54,28 +56,20 @@ class fleuryAlg:
      listaSUPREME.append(listaListaNumber.copy())
      listaListaNumber.clear()  
   
-  def selecionandoMenorElemento(self, lista):
-    resp = 10000000000000
-    listaResposta = []
-    for item in lista:
-     if item[1] < resp:
-      resp = item[1]
-      listaResposta = item.copy()
-    return listaResposta
-  
   def analisandoFleury(self, listaSUPREME, qtdLinhas):
     # Precisa colocar o naive aqui para identificar pontes.
     cont = 0
     destino = 0
     caminhoLista = []
+    naive = naivePonte()
     while cont < qtdLinhas-1:
-      inicio = listaSUPREME[destino]
-      posicaoLista = listaSUPREME.index(inicio)
-      menorValorEntreOsVertices = list(self.selecionandoMenorElemento(inicio))
-      caminhoLista.append(menorValorEntreOsVertices.copy())
-      listaSUPREME[posicaoLista].remove(menorValorEntreOsVertices)    
-      destino = menorValorEntreOsVertices[1] - 1            
-      cont = cont + 1
+       inicio = listaSUPREME[destino]
+      #  posicaoLista = listaSUPREME.index(inicio)
+       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho(inicio, listaSUPREME))
+       caminhoLista.append(menorValorEntreOsVertices.copy())
+       listaSUPREME[destino].remove(menorValorEntreOsVertices)    
+       destino = menorValorEntreOsVertices[1] - 1            
+       cont = cont + 1
     return caminhoLista
       
 

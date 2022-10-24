@@ -53,22 +53,15 @@ class criarGrafos:
     # Verificar se o arquivo existe
     strInterpolacao = 'data/grafosEulerianos/' + nomeArq + '.txt'
     arquivoExiste = self.isPath(strInterpolacao)   
-        
-    
+
     if (arquivoExiste == False):
       oPP = open(strInterpolacao, 'wb+')
       oPP.close()
     else:
       open(strInterpolacao, 'w').close()
-            
-    
+
     obj = open(strInterpolacao, 'r+')
-    
-    
-    
-    
     #  grau = random.randrange(1, 11, 2)
-    
     grau = 2
     # referente as duas linhas salvas la em cima
     # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
