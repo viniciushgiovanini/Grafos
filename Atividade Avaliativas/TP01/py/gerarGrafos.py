@@ -69,53 +69,40 @@ class criarGrafos:
     
     #  grau = random.randrange(1, 11, 2)
     
-    grau = 4
-    grau2 = grau-2
-    if tamReq == 1000:
-     grau = 4
-    elif tamReq == 100000:
-      grau = 2
-      grau2 = 2
-    
+    grau = 2
     # referente as duas linhas salvas la em cima
-    qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
+    # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
+    qtdLinhas = 1 + ((grau * int(tamReq)))
     obj.write(str(tamReq) + "_" + str(qtdLinhas) + "\n")
-        
+    
     listaRR = []
     listaRang= range(1, tamReq+1)
     for item in listaRang:
      listaRR.append(item)
-  
+
+    listaRRsemo1 = listaRR.copy()   
+    listaRRsemo1.pop(0)
     concatCont = 0
-    while (concatCont < grau-1):
-      listaRR = listaRR + listaRR
+    while (concatCont < grau - 1):
+      if (concatCont+1) < grau-1:
+        listaRR = listaRR + listaRR
+      else:
+        listaRR = listaRR + listaRRsemo1
       concatCont = concatCont + 1
-      
+
     random.shuffle(listaRR)
-    
-    
-    cont2Chega = tamReq/10
-    
     cont = 1
-    cont2 = 1
-    isGrau2 = False
-    temp = -1
     while cont <= tamReq:
-      
-      if cont2 == cont2Chega and cont2Chega != 0:
-        temp = grau
-        grau = grau2
-        cont2 = 0
-        isGrau2 = True
+      if cont == tamReq:
+        grau = grau -1
       
       self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
-      cont2 = cont2 + 1
-      cont = cont + 1
       
-      if isGrau2:
-        grau = temp
-        isGrau2 = False
-    
+      if cont == tamReq:
+        stringMontada = str(cont) + " " + str(1)
+        obj.write(stringMontada + "\n")  
+      cont = cont + 1
+        
     
     obj.close()  
 
