@@ -1,9 +1,39 @@
 class naivePonte:
-  def descobrirPonteFlury(self, lista):
-    isGrauzero = False
-    if len(lista)==1:
-      isGrauzero = True
-    return isGrauzero
+  
+  def inverterElemento(self, element):
+    temp0= element[0]
+    temp1 = element[1]
+    valorNew = element.copy()
+    valorNew[0] = temp1
+    valorNew[1] = temp0
+    return valorNew
+  
+  def descobrirPonteFlury(self, valor, listaSup):
+    # Ta quase funcionando, só que para descobrir que é ponte eu tenho que navegar ate 
+    # o caminho verificar se tem o caminho de volta e verificar se o tamanho da lista é 0
+    # Até agora eu consigo ir na lista e verificar se é 0 mas não consigo se tiver um caminho maior.
+    
+    
+    isPonte = False
+    valorInvert = self.inverterElemento(valor)
+    destino = valor[1]
+    tamLista = (len(listaSup[destino-1]))
+    if  (tamLista == 0) or (tamLista)==1:
+      isPonte = True
+    elif tamLista> 1:
+      temInvert = False
+      tamReal = (len(listaSup[destino-1]))
+      for item in listaSup[destino-1]:
+        if item == valorInvert:
+          temInvert = True
+      if temInvert:
+        tamReal = tamReal -1
+      
+      if tamReal == 0:
+        isPonte = True
+        
+         
+    return isPonte
   
   def selecionandoMenorElemento(self, lista):
     resp = 10000000000000
@@ -45,8 +75,7 @@ class naivePonte:
     loop = True
     while loop:
      menorValor = list(self.selecionandoMenorElemento(inicio2))
-     destino = menorValor[1]
-     isPonte = self.descobrirPonteFlury(listaSup[destino-1])
+     isPonte = self.descobrirPonteFlury(menorValor, listaSup)
      if isPonte == False:
        self.testarCiclodeVoltaRemove(listaSup, menorValor)
        loop = False
