@@ -65,7 +65,7 @@ class fleuryAlg:
     while cont < qtdLinhas-1:
        inicio = listaSUPREME[destino]
       #  posicaoLista = listaSUPREME.index(inicio)
-       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho(inicio, listaSUPREME))
+       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho2(inicio, listaSUPREME))
        caminhoLista.append(menorValorEntreOsVertices.copy())
        listaSUPREME[destino].remove(menorValorEntreOsVertices)    
        destino = menorValorEntreOsVertices[1] - 1            
@@ -105,7 +105,7 @@ class fleuryAlg:
       
       if contadorpularPrimeiraLinha != 0:
         linhaTratada = self.tratarLinha(item)
-               
+             
         # Estou fazendo o flag com a quantidade de linha, melhor fazer com o ultimo elemento.
         
         # Testar se o grafo é Euleriano  
