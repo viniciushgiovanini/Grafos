@@ -119,7 +119,7 @@ class fleuryAlg:
     while cont < qtdLinhas-1:
        inicio = listaSUPREME[destino]
       #  posicaoLista = listaSUPREME.index(inicio)
-       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho(inicio, listaSUPREME))
+       menorValorEntreOsVertices = list(naive.proxElemento(inicio, listaSUPREME))
        caminhoLista.append(menorValorEntreOsVertices.copy())
        listaSUPREME[destino].remove(menorValorEntreOsVertices)    
        destino = menorValorEntreOsVertices[1] - 1            

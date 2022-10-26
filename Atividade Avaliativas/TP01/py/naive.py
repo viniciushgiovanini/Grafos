@@ -48,18 +48,68 @@ class naivePonte:
   # ---------------------------------------X-----------------------------------
   # Funcoes principais do naive
   
-  def buscaLargura(self, item, listaSUP):
+  def verificarSeJaFoiPercorrido(self, lista, valor):
+    resp = False
+    if len(lista)==0:
+      return resp
+    else:
+     for item in lista:
+      if item == valor:
+        resp = True
+        return resp
+    return resp 
+  
+  def buscaA(self, destino, listaSUP, arestaOrigem):
+    # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
+    # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
+    l = deepcopy(listaSUP)
+    arestaOrigemCOPY = arestaOrigem[0]
+    lDESTINO2 = l[destino-1].copy()
+    lDESTINO2 = self.testarCiclodeVoltaRemovenaListComum(l[destino-1].copy(),arestaOrigem)
+    podePegarDestino = True
+    listaJaPercorrigos = []
+    while len(lDESTINO2)>0:
+     if podePegarDestino:
+        lDESTINO = l[destino-1]
+     lDESTINO = self.testarCiclodeVoltaRemovenaListComum(lDESTINO,arestaOrigem)
+
+     jaPercorrido = True
+     while jaPercorrido and (len(lDESTINO)>0):
+       menorElemento = self.selecionandoMenorElemento(lDESTINO)
+       jaPercorrido = self.verificarSeJaFoiPercorrido(listaJaPercorrigos, menorElemento[1])
+       if jaPercorrido:
+         lDESTINO.remove(menorElemento)
+       else:
+         arestaOrigem = menorElemento
+     
+     
+     
+     if menorElemento[1] == arestaOrigemCOPY:
+       return False
+     elif len(lDESTINO) == 0:
+      #  ENCONTOU PONTE
+       lDESTINO2.remove(arestaOrigem)
+       listaJaPercorrigos.remove(arestaOrigem[0])
+       lDESTINO = lDESTINO2.copy()
+       podePegarDestino = False
+     else:
+       destino = menorElemento[1]
+       
+       podePegarDestino = True
+       listaJaPercorrigos.append(menorElemento[0])
+    return True
+  
+  def proxElemento(self, listaINICIAL, listaSUP):
     # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
-    pass
-          
-  def selecionarProximoCaminho(self, inicio, listaSup):
-    # Essa funcao tem que testar todos os caminhos
-    inicio2 = inicio.copy()
-    for item in inicio2:
-      isPonte = self.buscaLargura(item, listaSup)  
-      if not isPonte:
-        self.testarCiclodeVoltaRemove(listaSup, item)
+    listaINICIALCOPY = listaINICIAL.copy()
+    for item in listaINICIALCOPY:
+      if len(listaINICIAL)!=1:
+        resp = self.buscaA(item[1], listaSUP, item)
+      else:
+        resp = False
+      if not resp:
+        self.testarCiclodeVoltaRemove(listaSUP, item)
         return item
-      if isPonte:
-        # Caso exista ponte continua o loop com outro valor/item
-        pass
+      
+     
+    
