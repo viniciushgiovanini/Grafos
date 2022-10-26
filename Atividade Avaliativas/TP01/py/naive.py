@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-
 class naivePonte:
   
   def inverterElemento(self, element):
@@ -10,43 +9,6 @@ class naivePonte:
     valorNew[0] = temp1
     valorNew[1] = temp0
     return valorNew
-  
-  def buscaProf(self, valor,l,  listaSup):
-   loop = True
-   lLimpo = l
-   b = deepcopy(listaSup)
-   while loop:
-    newValor = self.selecionandoMenorElemento(lLimpo) 
-    l = b[newValor[1]-1] 
-    if len(l)>1:
-      lLimpo = self.testarCiclodeVoltaRemovenaListComum(l, newValor)
-      if newValor[1] == valor[0]:
-        return False
-      else:
-        b[newValor[0]-1].remove(newValor)
-    else:
-      return True    
-      
-  def descobrirPonteFlury(self, valor, listaSup):
-    # Esse método é responsável por selecionar as arestas do vertice escolhido e mandar para busca em largura tentar
-    # chegar nele mesmo, caso caonsiga não precisa testar com os outros
-    isPonte = False
-    deslocalmentoInicial = listaSup[valor[1]-1]    
-    l = self.testarCiclodeVoltaRemovenaListComum(deslocalmentoInicial, valor)
-    tamL = len(l)
-    cont = 0
-    loop = True
-    while loop:
-      resp = self.buscaProf(valor, l, listaSup)
-      if resp == False:
-        return False
-      elif cont == tamL: 
-        return True
-      else:
-        l.remove(self.selecionandoMenorElemento(deslocalmentoInicial))
-        cont = cont + 1
-    
-    return isPonte
   
   def selecionandoMenorElemento(self, lista):
     resp = 10000000000000
@@ -82,16 +44,27 @@ class naivePonte:
       lista.remove(valor2)     
     return lista
   
-  def selecionarProximoCaminho(self, inicio, listaSup):
-    inicio2 = inicio.copy()
-    isPonte = False
+  def buscaProfundidade(self, item, listaSUP):
     loop = True
+    podeCopiar = True
+    destino = item[1]-1
+    arestasInicias = listaSUP[destino].copy()
+    arestasInicias = self.testarCiclodeVoltaRemovenaListComum(arestasInicias, item)
     while loop:
-     menorValor = list(self.selecionandoMenorElemento(inicio2))
-     isPonte = self.descobrirPonteFlury(menorValor, listaSup)
-     if isPonte == False:
-       self.testarCiclodeVoltaRemove(listaSup, menorValor)
-       loop = False
-     else:
-       inicio2.pop(0)
-    return menorValor 
+      if podeCopiar:
+        copiaArestasdoVertice = arestasInicias
+        copiaArestasdoVertice = self.testarCiclodeVoltaRemovenaListComum(copiaArestasdoVertice, item)
+      mv = self.selecionandoMenorElemento(copiaArestasdoVertice)
+      if item[0] == mv[1]:
+        return False
+      elif len(copiaArestasdoVertice)==1:
+        return True
+      else:
+        destino = mv[1]-1       
+  
+  def selecionarProximoCaminho(self, inicio, listaSup):
+    for item in inicio:
+      isPonte = self.buscaProfundidade(item, listaSup)  
+      if not isPonte:
+        self.testarCiclodeVoltaRemove(listaSup, item)
+        return item
