@@ -71,10 +71,8 @@ class fleuryAlg:
        destino = menorValorEntreOsVertices[1] - 1            
        cont = cont + 1
     return caminhoLista
-      
-
   
-  def fleuryInicial(self, nomeArq, entradaFL):
+  def fleuryInicial(self, nomeArq, entradaFL, tipoGrafo):
     
     strInterpolacao = ''
     entradaFL = int(entradaFL)
@@ -119,13 +117,33 @@ class fleuryAlg:
       else:
         qtddeLinhas = self.tratarPrmeiraLinhaQTD(item)
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
-    caimhoOuTrajeto = []    
-    caimhoOuTrajeto = list(self.analisandoFleury(listaVerticeeArestas, qtddeLinhas))
-    for item in caimhoOuTrajeto:
-      print( str(item) + "\n")
-     
+    caimhoOuTrajeto = []   
+    
+    if tipoGrafo:
+      resp = 0
+      resp = self.tipeGraph(listaVerticeeArestas)
+      if resp == 0:
+        print("Grafo Euleriano")
+      elif resp ==2:
+        print("Grafo Semi Euleriano")
+      elif resp > 2:
+        print("Grafo Nâo Euleriano")
+      return
+    else:
+      caimhoOuTrajeto = list(self.analisandoFleury(listaVerticeeArestas, qtddeLinhas))
+      for item in caimhoOuTrajeto:
+        print( str(item) + "\n")
+  
+  def tipeGraph(self, listaVerticeeAresta):
+   contadorDeGrauImpar = 0
+   for item in listaVerticeeAresta:
+     if len(item)%2==1:
+       contadorDeGrauImpar = contadorDeGrauImpar + 1
+   return contadorDeGrauImpar
     
      
+    
+    
   
   
   

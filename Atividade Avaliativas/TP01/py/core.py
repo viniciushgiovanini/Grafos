@@ -53,7 +53,7 @@ while(vLoop):
    entradaFL = int(input("Digite o número do grafo a ser analísado (1- Euleriano | 2- Não Euleriano | 3- Semi Euleriano: "))
    nomeArq = input("Digite o nome do arquivo a ser lido: ")
    print("\n")
-   gFleury.fleuryInicial(nomeArq,entradaFL)
+   gFleury.fleuryInicial(nomeArq,entradaFL, False)
   else:
     print("Valor inserido não existe !")
   print("0 - Encerrar o Programa | 1 - Geração dos Grafos")  
