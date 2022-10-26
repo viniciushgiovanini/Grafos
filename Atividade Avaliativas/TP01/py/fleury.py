@@ -34,29 +34,7 @@ class fleuryAlg:
       cont = cont + 1
     return int(qtdNumero)
   
-  def realizandoFleury(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber, ultimoElemento):
-   if len(listaGuardarVértice) == 0:
-    listaGuardarVértice.append(listaNumber[0])
-    listaListaNumber.append(list(listaNumber).copy())
-   elif (listaGuardarVértice[0] == listaNumber[0]) and not ultimoElemento:
-    listaGuardarVértice.append(listaNumber[0])
-    listaListaNumber.append(list(listaNumber).copy())
-   elif (listaGuardarVértice[0] != listaNumber[0]) and not ultimoElemento:
-    listaSUPREME.append(listaListaNumber.copy())
-    listaListaNumber.clear()   
-    qtdV = len(listaGuardarVértice)
-    listaGuardarVértice.clear()
-    listaGuardarVértice.append(listaNumber[0])
-    listaListaNumber.append(list(listaNumber).copy())
-    if qtdV % 2 != 0:
-      return True
-   elif ultimoElemento:
-     listaGuardarVértice.append(listaNumber[0])
-     listaListaNumber.append(list(listaNumber).copy())
-     listaSUPREME.append(listaListaNumber.copy())
-     listaListaNumber.clear()  
-  
-  def analisandoFleury(self, listaSUPREME, qtdLinhas):
+  def fleury(self, listaSUPREME, qtdLinhas):
     # Precisa colocar o naive aqui para identificar pontes.
     cont = 0
     destino = 0
@@ -72,20 +50,29 @@ class fleuryAlg:
        cont = cont + 1
     return caminhoLista
   
-  def fleuryInicial(self, nomeArq, entradaFL, tipoGrafo):
+  def realizandoGeracaoLista(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber, ultimoElemento):
+   if len(listaGuardarVértice) == 0:
+    listaGuardarVértice.append(listaNumber[0])
+    listaListaNumber.append(list(listaNumber).copy())
+   elif (listaGuardarVértice[0] == listaNumber[0]) and not ultimoElemento:
+    listaGuardarVértice.append(listaNumber[0])
+    listaListaNumber.append(list(listaNumber).copy())
+   elif (listaGuardarVértice[0] != listaNumber[0]) and not ultimoElemento:
+    listaSUPREME.append(listaListaNumber.copy())
+    listaListaNumber.clear()   
+    listaGuardarVértice.clear()
+    listaGuardarVértice.append(listaNumber[0])
+    listaListaNumber.append(list(listaNumber).copy())
+   elif ultimoElemento:
+     listaGuardarVértice.append(listaNumber[0])
+     listaListaNumber.append(list(listaNumber).copy())
+     listaSUPREME.append(listaListaNumber.copy())
+     listaListaNumber.clear()  
+  
+  
+  def gerandoListas(self, nomeArq):
     
-    strInterpolacao = ''
-    entradaFL = int(entradaFL)
-    if entradaFL == 1:
-       strInterpolacao = 'data/grafosEulerianos/' + nomeArq + '.txt'
-    elif entradaFL == 2:
-       strInterpolacao = 'data/grafosNaoEulerianos/' + nomeArq + '.txt'
-    elif entradaFL == 3:
-       strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
-    else:
-      print("Grafo não encontrado")
-      return
-    
+    strInterpolacao = "data/" + nomeArq + '.txt'
     reader = open(strInterpolacao, "r")  
     arquivinho = reader.readlines()
     contadorpularPrimeiraLinha = 0
@@ -107,39 +94,43 @@ class fleuryAlg:
         # Estou fazendo o flag com a quantidade de linha, melhor fazer com o ultimo elemento.
         
         # Testar se o grafo é Euleriano  
-        isNotEulerian =  self.realizandoFleury(linhaTratada, listaGuardarVértice, listaVerticeeArestas, listaListaNumber, flagcontadorLoopPrinciUltimoElement)
+        self.realizandoGeracaoLista(linhaTratada, listaGuardarVértice, listaVerticeeArestas, listaListaNumber, flagcontadorLoopPrinciUltimoElement)
         if contadorLoopPrinci == qtddeLinhas -3:
           flagcontadorLoopPrinciUltimoElement = True
+          pass
         contadorLoopPrinci = contadorLoopPrinci + 1
-        if isNotEulerian:
-          print("\nEsse grafo NÃO é euleriano\n")
-          return
+        # if isNotEulerian:
+        #   print("\nEsse grafo NÃO é euleriano\n")
+        #   return
       else:
         qtddeLinhas = self.tratarPrmeiraLinhaQTD(item)
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
-    caimhoOuTrajeto = []   
-    
-    if tipoGrafo:
-      resp = 0
-      resp = self.tipeGraph(listaVerticeeArestas)
-      if resp == 0:
-        print("Grafo Euleriano")
-      elif resp ==2:
-        print("Grafo Semi Euleriano")
-      elif resp > 2:
-        print("Grafo Nâo Euleriano")
-      return
-    else:
-      caimhoOuTrajeto = list(self.analisandoFleury(listaVerticeeArestas, qtddeLinhas))
-      for item in caimhoOuTrajeto:
-        print( str(item) + "\n")
+    return listaVerticeeArestas  
+      
+    # Pesquisa NAIVE
+    # caimhoOuTrajeto = []   
+    # caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, qtddeLinhas))
+    # for item in caimhoOuTrajeto:
+    #   print( str(item) + "\n")
   
-  def tipeGraph(self, listaVerticeeAresta):
+  def tipeGraph(self, nomeArq):
+   listaVerticeeAresta = self.gerandoListas(nomeArq)
    contadorDeGrauImpar = 0
    for item in listaVerticeeAresta:
      if len(item)%2==1:
        contadorDeGrauImpar = contadorDeGrauImpar + 1
-   return contadorDeGrauImpar
+   if contadorDeGrauImpar == 0:
+     print("-----X----")
+     print("Esse Grafo é Euleriano")
+     print("-----X----\n")
+   elif contadorDeGrauImpar == 2:
+     print("-----X----")
+     print("Esse Grafo é Semi Euleriano")
+     print("-----X----\n")
+   elif contadorDeGrauImpar > 2:
+     print("-----X----")
+     print("Esse Grafo não é Euleriano")
+     print("-----X----\n")
     
      
     

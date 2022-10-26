@@ -51,7 +51,7 @@ class criarGrafos:
   def criarEulerianos(self,tamReq, nomeArq):
     
     # Verificar se o arquivo existe
-    strInterpolacao = 'data/grafosEulerianos/' + nomeArq + '.txt'
+    strInterpolacao = 'data/' + nomeArq + '.txt'
     arquivoExiste = self.isPath(strInterpolacao)   
 
     if (arquivoExiste == False):
@@ -103,7 +103,7 @@ class criarGrafos:
   # grafo Nao euleriano
   def criarNaoEulerianos(self, qtdVertice, nomeArq):
     # Verificar se o arquivo existe
-    strInterpolacao = 'data/grafosNaoEulerianos/' + nomeArq + '.txt'
+    strInterpolacao = 'data/' + nomeArq + '.txt'
     arquivoExiste = self.isPath(strInterpolacao)   
         
     
@@ -176,7 +176,7 @@ class criarGrafos:
   #grafo Semi Euleriano
   def criarSemiEulerianos(self, qtdVertice, nomeArq):
   # Verificar se o arquivo existe
-    strInterpolacao = 'data/grafosSemiEulerianos/' + nomeArq + '.txt'
+    strInterpolacao = 'data/' + nomeArq + '.txt'
     arquivoExiste = self.isPath(strInterpolacao)   
         
     
