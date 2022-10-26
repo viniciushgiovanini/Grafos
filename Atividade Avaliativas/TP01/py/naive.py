@@ -2,6 +2,7 @@ from copy import deepcopy
 
 class naivePonte:
   
+  # Funcoes de apoio do naive
   def inverterElemento(self, element):
     temp0= element[0]
     temp1 = element[1]
@@ -44,27 +45,21 @@ class naivePonte:
       lista.remove(valor2)     
     return lista
   
-  def buscaProfundidade(self, item, listaSUP):
-    loop = True
-    podeCopiar = True
-    destino = item[1]-1
-    arestasInicias = listaSUP[destino].copy()
-    arestasInicias = self.testarCiclodeVoltaRemovenaListComum(arestasInicias, item)
-    while loop:
-      if podeCopiar:
-        copiaArestasdoVertice = arestasInicias
-        copiaArestasdoVertice = self.testarCiclodeVoltaRemovenaListComum(copiaArestasdoVertice, item)
-      mv = self.selecionandoMenorElemento(copiaArestasdoVertice)
-      if item[0] == mv[1]:
-        return False
-      elif len(copiaArestasdoVertice)==1:
-        return True
-      else:
-        destino = mv[1]-1       
+  # ---------------------------------------X-----------------------------------
+  # Funcoes principais do naive
   
+  def buscaLargura(self, item, listaSUP):
+    # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
+    pass
+          
   def selecionarProximoCaminho(self, inicio, listaSup):
-    for item in inicio:
-      isPonte = self.buscaProfundidade(item, listaSup)  
+    # Essa funcao tem que testar todos os caminhos
+    inicio2 = inicio.copy()
+    for item in inicio2:
+      isPonte = self.buscaLargura(item, listaSup)  
       if not isPonte:
         self.testarCiclodeVoltaRemove(listaSup, item)
         return item
+      if isPonte:
+        # Caso exista ponte continua o loop com outro valor/item
+        pass
