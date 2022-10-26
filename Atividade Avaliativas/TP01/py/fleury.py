@@ -34,22 +34,6 @@ class fleuryAlg:
       cont = cont + 1
     return int(qtdNumero)
   
-  def fleury(self, listaSUPREME, qtdLinhas):
-    # Precisa colocar o naive aqui para identificar pontes.
-    cont = 0
-    destino = 0
-    caminhoLista = []
-    naive = naivePonte()
-    while cont < qtdLinhas-1:
-       inicio = listaSUPREME[destino]
-      #  posicaoLista = listaSUPREME.index(inicio)
-       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho(inicio, listaSUPREME))
-       caminhoLista.append(menorValorEntreOsVertices.copy())
-       listaSUPREME[destino].remove(menorValorEntreOsVertices)    
-       destino = menorValorEntreOsVertices[1] - 1            
-       cont = cont + 1
-    return caminhoLista
-  
   def realizandoGeracaoLista(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber, ultimoElemento):
    if len(listaGuardarVértice) == 0:
     listaGuardarVértice.append(listaNumber[0])
@@ -106,12 +90,6 @@ class fleuryAlg:
         qtddeLinhas = self.tratarPrmeiraLinhaQTD(item)
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
     return listaVerticeeArestas  
-      
-    # Pesquisa NAIVE
-    # caimhoOuTrajeto = []   
-    # caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, qtddeLinhas))
-    # for item in caimhoOuTrajeto:
-    #   print( str(item) + "\n")
   
   def tipeGraph(self, nomeArq):
    listaVerticeeAresta = self.gerandoListas(nomeArq)
@@ -132,7 +110,35 @@ class fleuryAlg:
      print("Esse Grafo não é Euleriano")
      print("-----X----\n")
     
-     
+  def fleury(self, listaSUPREME, qtdLinhas):
+    # Precisa colocar o naive aqui para identificar pontes.
+    cont = 0
+    destino = 0
+    caminhoLista = []
+    naive = naivePonte()
+    while cont < qtdLinhas-1:
+       inicio = listaSUPREME[destino]
+      #  posicaoLista = listaSUPREME.index(inicio)
+       menorValorEntreOsVertices = list(naive.selecionarProximoCaminho(inicio, listaSUPREME))
+       caminhoLista.append(menorValorEntreOsVertices.copy())
+       listaSUPREME[destino].remove(menorValorEntreOsVertices)    
+       destino = menorValorEntreOsVertices[1] - 1            
+       cont = cont + 1
+    return caminhoLista  
+    
+  def pesquisarCaminho(self, nomeArq):
+    listaVerticeeArestas = self.gerandoListas(nomeArq)
+    
+    strInterpolacao = "data/" + nomeArq + '.txt'
+    reader = open(strInterpolacao, "r")  
+    arquivinho = reader.readline()
+    qtddeLinhas = self.tratarPrmeiraLinhaQTD(arquivinho)
+    
+    # Pesquisa NAIVE
+    caimhoOuTrajeto = []   
+    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, qtddeLinhas))
+    for item in caimhoOuTrajeto:
+      print( str(item) + "\n")     
     
     
   
