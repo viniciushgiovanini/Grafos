@@ -1,5 +1,4 @@
 from copy import deepcopy
-from lib2to3.pgen2.token import LPAR
 
 class naivePonte:
   
