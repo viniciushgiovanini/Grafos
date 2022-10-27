@@ -1,7 +1,7 @@
 #imports
 import random
 import os
-
+from naive import naivePonte
 class criarGrafos:
 
   #funcoes globais 
@@ -10,6 +10,13 @@ class criarGrafos:
     if (os.path.exists(caminho)):
       resp = True
     return resp 
+  
+  def salvarMatrizEmArquivo(self, m, obj):
+    for inicio in m:
+     for item in inicio:
+      stringMontada = str(item[0]) + " " + str(item[1])
+      obj.write(stringMontada + "\n") 
+  
   #------------------------------------------
   #funcoes do grafo Euleriano  
   def gerarVerticesEulerianos(self, cont, grau, obj, listaRR):
@@ -47,7 +54,66 @@ class criarGrafos:
       stringMontada = ""     
       cont2 = cont2 + 1
     # listaRR = []  
+  
+  def verificarselecionarElemento(self, listaElementosSelecionados, valor):
+    tam = len(listaElementosSelecionados)
+    if tam == 0 :
+      return False
+    else:
+      for item in listaElementosSelecionados:
+       if item == valor:
+         return True
+    return False
+  
+  def selecionarElemento(self, listaRR, grau, valorOrigem):
+    cont = 0
+    contadorLista = 0
+    listadosDoisValores = []
+    marcador = False
+    listaElementosSelecionados = []
+    while cont < grau or marcador:
+      elementoLista = listaRR[contadorLista]
       
+      if elementoLista != valorOrigem and not self.verificarselecionarElemento(listaElementosSelecionados, elementoLista):
+        l = []
+        l.append(valorOrigem)
+        l.append(elementoLista)
+        listadosDoisValores.append(l)
+        listaRR.remove(elementoLista)
+        marcador = False
+        listaElementosSelecionados.append(elementoLista)
+      else:
+        contadorLista = contadorLista + 1
+        marcador = True
+        
+            
+      cont = cont + 1
+    return listadosDoisValores  
+   
+  def gerarMatrizdeSalvamento(self, matrizSalvamento, elementos):
+  # 1 3 | 1 5
+    n = naivePonte()    
+    for item in elementos:
+     destinoPrincipal = item[0]-1
+     destinoSecundario = item[1]-1
+     
+     testarNone = matrizSalvamento[destinoPrincipal]
+     testarNone2 = matrizSalvamento[destinoSecundario]
+     if testarNone == None:
+       listaEmp = []
+       matrizSalvamento[destinoPrincipal] = listaEmp.copy()
+       matrizSalvamento[destinoPrincipal].append(item) 
+     else:
+       matrizSalvamento[destinoPrincipal].append(item) 
+     if testarNone2 == None:
+      listaEmp = []
+      matrizSalvamento[destinoSecundario] = listaEmp.copy()
+      invertItem = n.inverterElemento(item)
+      matrizSalvamento[destinoSecundario].append(invertItem)
+     else:
+       invertItem = n.inverterElemento(item)
+       matrizSalvamento[destinoSecundario].append(invertItem)
+    
   def criarEulerianos(self,tamReq, nomeArq):
     
     # Verificar se o arquivo existe
@@ -65,7 +131,7 @@ class criarGrafos:
     grau = 2
     # referente as duas linhas salvas la em cima
     # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
-    qtdLinhas = 1 + ((grau * int(tamReq)))
+    qtdLinhas = 1 + ((grau * int(tamReq))*2)
     obj.write(str(tamReq) + "_" + str(qtdLinhas) + "\n")
     
     listaRR = []
@@ -76,6 +142,7 @@ class criarGrafos:
     listaRRsemo1 = listaRR.copy()   
     listaRRsemo1.pop(0)
     concatCont = 0
+    matrizSalvamento = [None] * (tamReq)
     while (concatCont < grau - 1):
       if (concatCont+1) < grau-1:
         listaRR = listaRR + listaRR
@@ -89,13 +156,22 @@ class criarGrafos:
       if cont == tamReq:
         grau = grau -1
       
-      self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
+      elementos = self.selecionarElemento(listaRR, grau, cont)
+      self.gerarMatrizdeSalvamento(matrizSalvamento, elementos)     
       
       if cont == tamReq:
-        stringMontada = str(cont) + " " + str(1)
-        obj.write(stringMontada + "\n")  
-      cont = cont + 1
+        n = naivePonte()  
+        ulitmoElemento = []
+        ulitmoElemento.append(1)
+        ulitmoElemento.append(cont)
+        matrizSalvamento[0].append(ulitmoElemento)
+        ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
+        matrizSalvamento[tamReq-1].append(ulitmoElementoInvert)
         
+        
+      cont = cont + 1
+    
+    self.salvarMatrizEmArquivo(matrizSalvamento, obj)    
     
     obj.close()  
 

@@ -53,7 +53,6 @@ class fleuryAlg:
      listaSUPREME.append(listaListaNumber.copy())
      listaListaNumber.clear()  
   
-  
   def gerandoListas(self, nomeArq):
     
     strInterpolacao = "data/" + nomeArq + '.txt'
