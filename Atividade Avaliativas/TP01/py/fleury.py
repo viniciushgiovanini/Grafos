@@ -140,7 +140,7 @@ class fleuryAlg:
     listaVerticeeArestas = self.gerandoListas(nomeArq)
     # Pesquisa NAIVE
     caimhoOuTrajeto = []   
-    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas))
+    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, 1))
     for item in caimhoOuTrajeto:
       print( str(item) + "\n")     
     
