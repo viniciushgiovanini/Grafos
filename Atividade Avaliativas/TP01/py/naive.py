@@ -141,5 +141,7 @@ class naivePonte:
         return item
       # elif resp == 2:
       #   self.eliminarUltimasPontes(listaSUP,item)
-     
+    if resp == 1:
+      itemA = listaINICIALCOPY[len(listaINICIALCOPY)-1]
+      return itemA
     

@@ -116,9 +116,9 @@ class fleuryAlg:
       resp = True
     return resp
     
-  def fleury(self, listaSUPREME, qtdLinhas):
+  def fleury(self, listaSUPREME, verticeInicial):
     # Precisa colocar o naive aqui para identificar pontes.
-    destino = 0
+    destino = verticeInicial-1
     caminhoLista = []
     naive = naivePonte()
     tamLista = len(listaSUPREME)-1
@@ -138,15 +138,9 @@ class fleuryAlg:
     
   def pesquisarCaminho(self, nomeArq):
     listaVerticeeArestas = self.gerandoListas(nomeArq)
-    
-    strInterpolacao = "data/" + nomeArq + '.txt'
-    reader = open(strInterpolacao, "r")  
-    arquivinho = reader.readline()
-    qtddeLinhas = self.tratarPrmeiraLinhaQTD(arquivinho)
-    
     # Pesquisa NAIVE
     caimhoOuTrajeto = []   
-    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, qtddeLinhas))
+    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas))
     for item in caimhoOuTrajeto:
       print( str(item) + "\n")     
     
