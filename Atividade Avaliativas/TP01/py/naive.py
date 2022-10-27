@@ -116,7 +116,9 @@ class naivePonte:
               podePegarDestino = False
               loop = False
             cont = cont -1
-           
+            if cont == -1:
+              # Eliminar as ultimas pontes e terminar.
+              pass
         
      else:
        destino = menorElemento[1]
