@@ -1,4 +1,5 @@
 from copy import deepcopy
+from lib2to3.pgen2.token import LPAR
 
 class naivePonte:
   
@@ -59,6 +60,13 @@ class naivePonte:
         return resp
     return resp 
   
+  def verificarExistencia(self, lista, valor):
+    resp = False
+    for item in lista:
+      if item == valor:
+        resp = True
+    return resp
+  
   def buscaA(self, destino, listaSUP, arestaOrigem):
     # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
     # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
@@ -71,7 +79,8 @@ class naivePonte:
     while len(lDESTINO2)>0:
      if podePegarDestino:
         lDESTINO = l[destino-1]
-     lDESTINO = self.testarCiclodeVoltaRemovenaListComum(lDESTINO,arestaOrigem)
+        lDESTINO = self.testarCiclodeVoltaRemovenaListComum(lDESTINO,arestaOrigem)
+      
 
      jaPercorrido = True
      while jaPercorrido and (len(lDESTINO)>0):
@@ -88,10 +97,28 @@ class naivePonte:
        return False
      elif len(lDESTINO) == 0:
       #  ENCONTOU PONTE
-       lDESTINO2.remove(arestaOrigem)
-       listaJaPercorrigos.remove(arestaOrigem[0])
-       lDESTINO = lDESTINO2.copy()
-       podePegarDestino = False
+
+        if self.verificarExistencia(lDESTINO2, arestaOrigem):
+          lDESTINO2.remove(arestaOrigem)
+          listaJaPercorrigos.remove(arestaOrigem[0])
+          lDESTINO = lDESTINO2.copy()
+          podePegarDestino = False
+        else:
+          loop = True
+          cont = len(listaJaPercorrigos)-1
+          while loop:
+            elemento = listaJaPercorrigos[cont]
+            inicio = l[elemento-1]
+            if len(inicio)>1:
+              lDESTINO2 = inicio.copy()
+              menorElemento = self.selecionandoMenorElemento(lDESTINO2)
+              lDESTINO2.remove(menorElemento)
+              lDESTINO = lDESTINO2.copy()
+              podePegarDestino = False
+              loop = False
+            cont = cont -1
+           
+        
      else:
        destino = menorElemento[1]
        
