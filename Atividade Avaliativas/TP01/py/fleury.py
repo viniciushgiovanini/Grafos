@@ -109,21 +109,31 @@ class fleuryAlg:
      print("-----X----")
      print("Esse Grafo não é Euleriano")
      print("-----X----\n")
+  
+  def verificarTamLista(self, l):
+    resp = False
+    if len(l) == 0:
+      resp = True
+    return resp
     
   def fleury(self, listaSUPREME, qtdLinhas):
     # Precisa colocar o naive aqui para identificar pontes.
-    cont = 0
     destino = 0
     caminhoLista = []
     naive = naivePonte()
-    while cont < qtdLinhas-1:
+    tamLista = len(listaSUPREME)-1
+    # while cont < qtdLinhas-1:
+    while tamLista > 0:
        inicio = listaSUPREME[destino]
       #  posicaoLista = listaSUPREME.index(inicio)
        menorValorEntreOsVertices = list(naive.proxElemento(inicio, listaSUPREME))
        caminhoLista.append(menorValorEntreOsVertices.copy())
        listaSUPREME[destino].remove(menorValorEntreOsVertices)    
+       listaFicouVazia = self.verificarTamLista(listaSUPREME[destino])
        destino = menorValorEntreOsVertices[1] - 1            
-       cont = cont + 1
+       if listaFicouVazia:
+         tamLista = tamLista -1 
+               
     return caminhoLista  
     
   def pesquisarCaminho(self, nomeArq):

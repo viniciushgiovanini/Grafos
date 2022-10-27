@@ -65,7 +65,7 @@ class naivePonte:
       if item == valor:
         resp = True
     return resp
-  
+
   def buscaA(self, destino, listaSUP, arestaOrigem):
     # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
     # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
@@ -93,7 +93,7 @@ class naivePonte:
      
      
      if menorElemento[1] == arestaOrigemCOPY:
-       return False
+       return 0
      elif len(lDESTINO) == 0:
       #  ENCONTOU PONTE
 
@@ -118,26 +118,28 @@ class naivePonte:
             cont = cont -1
             if cont == -1:
               # Eliminar as ultimas pontes e terminar.
-              pass
+              return
         
      else:
        destino = menorElemento[1]
        
        podePegarDestino = True
        listaJaPercorrigos.append(menorElemento[0])
-    return True
+    return 1
   
   def proxElemento(self, listaINICIAL, listaSUP):
     # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
     listaINICIALCOPY = listaINICIAL.copy()
+    listaINICIALCOPY.sort()
     for item in listaINICIALCOPY:
       if len(listaINICIAL)!=1:
         resp = self.buscaA(item[1], listaSUP, item)
       else:
-        resp = False
-      if not resp:
+        resp = 0
+      if resp == 0:
         self.testarCiclodeVoltaRemove(listaSUP, item)
         return item
-      
+      # elif resp == 2:
+      #   self.eliminarUltimasPontes(listaSUP,item)
      
     
