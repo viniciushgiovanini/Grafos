@@ -116,10 +116,12 @@ class naivePonte:
             if len(inicio)>1:
               lDESTINO2 = inicio.copy()
               menorElemento = self.selecionandoMenorElemento(lDESTINO2)
+              l[elemento-1].remove(menorElemento)
               lDESTINO2.remove(menorElemento)
               lDESTINO = lDESTINO2.copy()
               podePegarDestino = False
               loop = False
+              listaJaPercorrigos.remove(elemento)
             cont = cont -1
             if cont == -1:
               # Eliminar as ultimas pontes e terminar.
