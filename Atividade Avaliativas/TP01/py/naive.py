@@ -64,30 +64,46 @@ class naivePonte:
       if item[1] == valor:
         return item
     return []
- 
+  
+  def verificarArestaPenultima(self, lista, valores):
+    for item2 in lista:
+      for item3 in valores:
+        if item2[1] == item3[1]:
+          return item2
+    return []
+  
   def buscaA(self, destino, listaSUP, arestaOrigem):
     # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
     # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
     l = deepcopy(listaSUP)
     arestaOrigemCOPY = arestaOrigem[0]
+    lDESTINOORIGINAL = l[arestaOrigem[0]-1].copy()
     lDESTINO2 = l[destino-1].copy()
     lDESTINO2 = self.testarCiclodeVoltaRemovenaListComum(l[destino-1].copy(),arestaOrigem)
     podePegarDestino = True
     listaJaPercorrigos = []
     while len(lDESTINO2)>0:
+     
+     isAtalho = False  
+    
      if podePegarDestino:
         lDESTINO = l[destino-1]
         lDESTINO = self.testarCiclodeVoltaRemovenaListComum(lDESTINO,arestaOrigem)
       
+     #  ARRUMAR ESSA FUNCAO, POIS ELA TA VERIFICANDO SÓ O O VERTICE ORIGEM, MAS EU TENHO OS VERTICE QUE CHEGAM NELA
      verificarSeTemNosOutrosVertices = self.verificarExistencia(lDESTINO, arestaOrigemCOPY)
 
      if len(verificarSeTemNosOutrosVertices)!=0:
         jaPercorrido = False
         menorElemento = verificarSeTemNosOutrosVertices
      else:
+       verificarSetemAtalho = self.verificarArestaPenultima(lDESTINO, lDESTINOORIGINAL)
+       if len(verificarSetemAtalho)!=0:
+         isAtalho = True
+         menorElemento = verificarSetemAtalho
        jaPercorrido = True
       
-     while jaPercorrido and (len(lDESTINO)>0):
+     while (jaPercorrido) and (len(lDESTINO)>0) and (not isAtalho):
        menorElemento = self.selecionandoMenorElemento(lDESTINO)
        jaPercorrido = self.verificarSeJaFoiPercorrido(listaJaPercorrigos, menorElemento[1])
        if jaPercorrido:
@@ -97,7 +113,7 @@ class naivePonte:
      
      
      
-     if menorElemento[1] == arestaOrigemCOPY:
+     if (menorElemento[1] == arestaOrigemCOPY) or (isAtalho):
        return 0
      elif len(lDESTINO) == 0:
       #  ENCONTOU PONTE
