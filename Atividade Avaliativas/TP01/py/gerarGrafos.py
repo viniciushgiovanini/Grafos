@@ -71,7 +71,8 @@ class criarGrafos:
     listadosDoisValores = []
     marcador = False
     listaElementosSelecionados = []
-    while cont < grau or marcador:
+
+    while cont < (grau-1) or marcador:
       elementoLista = listaRR[contadorLista]
       
       if elementoLista != valorOrigem and not self.verificarselecionarElemento(listaElementosSelecionados, elementoLista):
@@ -88,6 +89,7 @@ class criarGrafos:
         
             
       cont = cont + 1
+    
     return listadosDoisValores  
    
   def gerarMatrizdeSalvamento(self, matrizSalvamento, elementos):
@@ -131,39 +133,35 @@ class criarGrafos:
     grau = 2
     # referente as duas linhas salvas la em cima
     # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
-    qtdLinhas = 1 + ((grau * int(tamReq))*2)
+    qtdLinhas = 1 + ((grau * int(tamReq)))
     obj.write(str(tamReq) + "_" + str(qtdLinhas) + "\n")
     
     listaRR = []
     listaRang= range(1, tamReq+1)
     for item in listaRang:
      listaRR.append(item)
-
-    listaRRsemo1 = listaRR.copy()   
-    listaRRsemo1.pop(0)
-    concatCont = 0
+    
     matrizSalvamento = [None] * (tamReq)
-    while (concatCont < grau - 1):
-      if (concatCont+1) < grau-1:
-        listaRR = listaRR + listaRR
-      else:
-        listaRR = listaRR + listaRRsemo1
-      concatCont = concatCont + 1
 
-    random.shuffle(listaRR)
     cont = 1
-    while cont <= tamReq:
+    while cont < tamReq:
       if cont == tamReq:
         grau = grau -1
       
+      
+      for item in listaRR:
+        if item == cont:
+          listaRR.remove(cont)
+      
       elementos = self.selecionarElemento(listaRR, grau, cont)
+    
       self.gerarMatrizdeSalvamento(matrizSalvamento, elementos)     
       
-      if cont == tamReq:
+      if cont == (tamReq-1):
         n = naivePonte()  
         ulitmoElemento = []
         ulitmoElemento.append(1)
-        ulitmoElemento.append(cont)
+        ulitmoElemento.append(cont+1)
         matrizSalvamento[0].append(ulitmoElemento)
         ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
         matrizSalvamento[tamReq-1].append(ulitmoElementoInvert)
