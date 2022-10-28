@@ -60,12 +60,11 @@ class naivePonte:
     return resp 
   
   def verificarExistencia(self, lista, valor):
-    resp = False
     for item in lista:
-      if item == valor:
-        resp = True
-    return resp
-
+      if item[1] == valor:
+        return item
+    return []
+ 
   def buscaA(self, destino, listaSUP, arestaOrigem):
     # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
     # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
@@ -80,8 +79,14 @@ class naivePonte:
         lDESTINO = l[destino-1]
         lDESTINO = self.testarCiclodeVoltaRemovenaListComum(lDESTINO,arestaOrigem)
       
+     verificarSeTemNosOutrosVertices = self.verificarExistencia(lDESTINO, arestaOrigemCOPY)
 
-     jaPercorrido = True
+     if len(verificarSeTemNosOutrosVertices)!=0:
+        jaPercorrido = False
+        menorElemento = verificarSeTemNosOutrosVertices
+     else:
+       jaPercorrido = True
+      
      while jaPercorrido and (len(lDESTINO)>0):
        menorElemento = self.selecionandoMenorElemento(lDESTINO)
        jaPercorrido = self.verificarSeJaFoiPercorrido(listaJaPercorrigos, menorElemento[1])
