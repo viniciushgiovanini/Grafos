@@ -138,15 +138,24 @@ class fleuryAlg:
          tamLista = tamLista -1 
                
     return caminhoLista  
+  
+  def isCaminhoOrTrajeto(self, caminhoouTrajeto):
+    primeiroElemento = caminhoouTrajeto[0].copy()
+    ultimoElemento = caminhoouTrajeto[len(caminhoouTrajeto)-1]
+    if primeiroElemento[0]==ultimoElemento[1]:
+      print("Ciclo Euleriano")
+    else:
+      print("Trajeto Euleriano")
+    
     
   def pesquisarCaminho(self, nomeArq, verticeInicial):
     listaVerticeeArestas = self.gerandoListas(nomeArq)
     # Pesquisa NAIVE
     caimhoOuTrajeto = []   
     caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, verticeInicial))
-    for item in caimhoOuTrajeto:
-      print( str(item) + "\n")     
-    
+    # for item in caimhoOuTrajeto:
+    #   print( str(item) + "\n")     
+    self.isCaminhoOrTrajeto(caimhoOuTrajeto)
     
   
   

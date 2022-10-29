@@ -1,5 +1,5 @@
 #imports
-import random
+# import random
 import os
 from naive import naivePonte
 import math
