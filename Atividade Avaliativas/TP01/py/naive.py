@@ -141,7 +141,7 @@ class naivePonte:
             cont = cont -1
             if cont == -1:
               # Eliminar as ultimas pontes e terminar.
-              return
+              return 1
         
      else:
        destino = menorElemento[1]
@@ -154,16 +154,17 @@ class naivePonte:
     # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
     listaINICIALCOPY = listaINICIAL.copy()
     listaINICIALCOPY.sort()
+    tamListaInicial = len(listaINICIAL)
+    contQtdVerificados = 0
     for item in listaINICIALCOPY:
-      if len(listaINICIAL)!=1:
+      if tamListaInicial !=1 and contQtdVerificados != (tamListaInicial-1):
         resp = self.buscaA(item[1], listaSUP, item)
       else:
         resp = 0
       if resp == 0:
         self.testarCiclodeVoltaRemove(listaSUP, item)
         return item
-      # elif resp == 2:
-      #   self.eliminarUltimasPontes(listaSUP,item)
+      contQtdVerificados = contQtdVerificados + 1
     if resp == 1:
       itemA = listaINICIALCOPY[len(listaINICIALCOPY)-1]
       return itemA

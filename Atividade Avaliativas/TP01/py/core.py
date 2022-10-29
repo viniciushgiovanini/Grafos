@@ -60,7 +60,8 @@ while(vLoop):
     gFleury = fleuryAlg()
     print("\n")
     nomeArq = input("Digite o nome do arquivo a ser lido: ")
-    gFleury.pesquisarCaminho(nomeArq)
+    verticeInicial = input("Digite o vertice inicial da busca: ")
+    gFleury.pesquisarCaminho(nomeArq, int(verticeInicial))
   else:
     print("Valor inserido não existe !")
   print("0 - Encerrar o Programa | 1 - Geração dos Grafos | 2 - identificacao de Grafos | 3 - Realizar Caminho")  

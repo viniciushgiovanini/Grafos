@@ -125,23 +125,27 @@ class fleuryAlg:
     while tamLista > 0:
        inicio = listaSUPREME[destino]
       #  posicaoLista = listaSUPREME.index(inicio)
-       menorValorEntreOsVertices = list(naive.proxElemento(inicio, listaSUPREME))
+       if inicio != []:
+         menorValorEntreOsVertices = list(naive.proxElemento(inicio, listaSUPREME))
+       else:
+         return caminhoLista
        caminhoLista.append(menorValorEntreOsVertices.copy())
        listaSUPREME[destino].remove(menorValorEntreOsVertices)    
        listaFicouVazia = self.verificarTamLista(listaSUPREME[destino])
        destino = menorValorEntreOsVertices[1] - 1            
+       
        if listaFicouVazia:
          tamLista = tamLista -1 
                
     return caminhoLista  
     
-  def pesquisarCaminho(self, nomeArq):
+  def pesquisarCaminho(self, nomeArq, verticeInicial):
     listaVerticeeArestas = self.gerandoListas(nomeArq)
     # Pesquisa NAIVE
     caimhoOuTrajeto = []   
-    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, 1))
-    # for item in caimhoOuTrajeto:
-    #   print( str(item) + "\n")     
+    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, verticeInicial))
+    for item in caimhoOuTrajeto:
+      print( str(item) + "\n")     
     
     
   
