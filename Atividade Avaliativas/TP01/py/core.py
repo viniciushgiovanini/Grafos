@@ -61,7 +61,12 @@ while(vLoop):
     print("\n")
     nomeArq = input("Digite o nome do arquivo a ser lido: ")
     verticeInicial = input("Digite o vertice inicial da busca: ")
+    start = time.perf_counter()
     gFleury.pesquisarCaminho(nomeArq, int(verticeInicial))
+    end = time.perf_counter()
+    print("-----X----\n")
+    print("Tempo de Execucao da Busca: ", end - start)
+    print("\n\n")
   else:
     print("Valor inserido não existe !")
   print("0 - Encerrar o Programa | 1 - Geração dos Grafos | 2 - identificacao de Grafos | 3 - Realizar Caminho")  

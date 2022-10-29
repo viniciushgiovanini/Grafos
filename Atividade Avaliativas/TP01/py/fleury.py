@@ -143,9 +143,9 @@ class fleuryAlg:
     primeiroElemento = caminhoouTrajeto[0].copy()
     ultimoElemento = caminhoouTrajeto[len(caminhoouTrajeto)-1]
     if primeiroElemento[0]==ultimoElemento[1]:
-      print("Ciclo Euleriano")
+      print("\n\nCiclo Euleriano\n")
     else:
-      print("Trajeto Euleriano")
+      print("\n\nTrajeto Euleriano\n")
     
     
   def pesquisarCaminho(self, nomeArq, verticeInicial):
