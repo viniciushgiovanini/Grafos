@@ -46,7 +46,6 @@ while(vLoop):
       
     else:
       print("Valor inserido não existe !")   
-    break 
   elif numeroCase == 2:
    gFleury = fleuryAlg()
    print("\n")
@@ -57,13 +56,11 @@ while(vLoop):
    end = time.perf_counter()
    print("Tempo de Execucao da Descoberta: ", end - start)
    print("-----X----\n")
-   break
   elif numeroCase == 3:
     gFleury = fleuryAlg()
     print("\n")
     nomeArq = input("Digite o nome do arquivo a ser lido: ")
     gFleury.pesquisarCaminho(nomeArq)
-    break
   else:
     print("Valor inserido não existe !")
   print("0 - Encerrar o Programa | 1 - Geração dos Grafos | 2 - identificacao de Grafos | 3 - Realizar Caminho")  

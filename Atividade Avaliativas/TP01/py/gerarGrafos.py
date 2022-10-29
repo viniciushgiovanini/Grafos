@@ -2,6 +2,7 @@
 import random
 import os
 from naive import naivePonte
+import math
 class criarGrafos:
 
   #funcoes globais 
@@ -18,43 +19,7 @@ class criarGrafos:
       obj.write(stringMontada + "\n") 
   
   #------------------------------------------
-  #funcoes do grafo Euleriano  
-  def gerarVerticesEulerianos(self, cont, grau, obj, listaRR):
-    cont2 = 0
-    contadorLaco = 1
-    marcadorLaco = False
-    valor1 = -1
-    while(cont2 < grau):
-      # Salvar cont no arquivo e numero sorteado
-      if len(listaRR) != 0 and marcadorLaco == False: 
-       destinoAresta = listaRR[0]
-       
-      else:
-       destinoAresta = listaRR[contadorLaco]
-       contadorLaco = contadorLaco+1
     
-      
-      if destinoAresta == cont or destinoAresta == valor1:
-        marcadorLaco = True
-        grau = grau + 1
-      else:
-        valor1 = destinoAresta
-        contadorLaco = 1
-        marcadorLaco = False
-        listaRR.remove(destinoAresta)
-        
-        
-       
-       
-      
-      if not marcadorLaco:
-       stringMontada = str(cont) + " " + str(destinoAresta)
-       obj.write(stringMontada + "\n")  
-      
-      stringMontada = ""     
-      cont2 = cont2 + 1
-    # listaRR = []  
-  
   def verificarselecionarElemento(self, listaElementosSelecionados, valor):
     tam = len(listaElementosSelecionados)
     if tam == 0 :
@@ -193,55 +158,55 @@ class criarGrafos:
     
     
     
-    #  grau = random.randrange(1, 11, 2)
-    grau = 4
-    # grauDivisaoLinha = 1
-    if qtdVertice == 1000:
-     grau = 4
-    #  grauDivisaoLinha = 10
-    elif qtdVertice == 100000:
-      grau = 2
-      # grauDivisaoLinha = 1000
-    
-    grau2 = grau - (grau-1)
+    grau = 2
     # referente as duas linhas salvas la em cima
-    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-grau2) * int(qtdVertice/(qtdVertice/10))))
+    # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
+    qtdLinhas = 1 + ((grau * int(qtdVertice)+3))
     obj.write(str(qtdVertice) + "_" + str(qtdLinhas) + "\n")
-        
+    
     listaRR = []
     listaRang= range(1, qtdVertice+1)
     for item in listaRang:
      listaRR.append(item)
-  
-    concatCont = 0
-    while (concatCont < grau-1):
-      listaRR = listaRR + listaRR
-      concatCont = concatCont + 1
-      
-    random.shuffle(listaRR)
     
-    
-    
-    cont2Chega = qtdVertice/10
+    matrizSalvamento = [None] * (qtdVertice)
+
     cont = 1
-    cont2 = 1
-    isGrau2 = False
-    temp = -1
-    while cont <= qtdVertice:
+    while cont < qtdVertice:
+      if cont == qtdVertice:
+        grau = grau -1
       
-      if cont2 == cont2Chega and cont2Chega != 0:
-        temp = grau
-        grau = grau2
-        cont2 = 0
-        isGrau2 = True
       
-      self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
-      cont2 = cont2 + 1
+      for item in listaRR:
+        if item == cont:
+          listaRR.remove(cont)
+      
+      elementos = self.selecionarElemento(listaRR, grau, cont)
+    
+      self.gerarMatrizdeSalvamento(matrizSalvamento, elementos)     
+      
+      if cont == (qtdVertice-1):
+        n = naivePonte()  
+        ulitmoElemento = []
+        ulitmoElemento.append(1)
+        ulitmoElemento.append(cont+1)
+        matrizSalvamento[0].append(ulitmoElemento)
+        ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
+        matrizSalvamento[qtdVertice-1].append(ulitmoElementoInvert)
+      if cont == 1 or cont == 2:
+        n = naivePonte()  
+        ulitmoElemento = []
+        ulitmoElemento.append(cont)
+        elementoDest = math.floor(qtdVertice/2)
+        ulitmoElemento.append(elementoDest)
+        matrizSalvamento[cont-1].append(ulitmoElemento)
+        ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
+        matrizSalvamento[elementoDest] = [] 
+        matrizSalvamento[elementoDest].append(ulitmoElementoInvert)   
+        
       cont = cont + 1
-      
-      if isGrau2:
-        grau = temp
-        isGrau2 = False
+    
+    self.salvarMatrizEmArquivo(matrizSalvamento, obj)
     
     
     obj.close()
@@ -263,65 +228,54 @@ class criarGrafos:
     
     obj = open(strInterpolacao, 'r+')
     
-    
-    
-    
-    #  grau = random.randrange(1, 11, 2)
-    grau = 4
-    grau2 = grau - (grau-1)
-    # grauDivisaoLinha = 1
-    if qtdVertice == 1000:
-     grau = 4
-    #  grauDivisaoLinha = 10
-    elif qtdVertice == 100000:
-      grau = 2
-      grau2 = 1
-      # grauDivisaoLinha = 1000
-    
-    
+    grau = 2
     # referente as duas linhas salvas la em cima
-    qtdLinhas = 1 + ((grau * int(qtdVertice)) - ((grau-grau2) * 2))
+    # qtdLinhas = 1 + ((grau * int(tamReq)) - (((grau-(grau2))) * int(tamReq/(tamReq/10))))
+    qtdLinhas = 1 + ((grau * int(qtdVertice))+2)
     obj.write(str(qtdVertice) + "_" + str(qtdLinhas) + "\n")
-        
+    
     listaRR = []
     listaRang= range(1, qtdVertice+1)
     for item in listaRang:
      listaRR.append(item)
-  
-    concatCont = 0
-    while (concatCont < grau-1):
-      listaRR = listaRR + listaRR
-      concatCont = concatCont + 1
-      
-    random.shuffle(listaRR)
     
-    
-    
-    cont2Chega = qtdVertice/10
+    matrizSalvamento = [None] * (qtdVertice)
+
     cont = 1
-    cont2 = 1
-    isGrau2 = False
-    temp = -1
-    contSemiEule = 0
+    while cont < qtdVertice:
+      if cont == qtdVertice:
+        grau = grau -1
+      
+      
+      for item in listaRR:
+        if item == cont:
+          listaRR.remove(cont)
+      
+      elementos = self.selecionarElemento(listaRR, grau, cont)
     
-    while cont <= qtdVertice:
+      self.gerarMatrizdeSalvamento(matrizSalvamento, elementos)     
       
-      if cont2 == cont2Chega and cont2Chega != 0 and contSemiEule < 2:
-        temp = grau
-        grau = grau2
-        cont2 = 0
-        isGrau2 = True
-        contSemiEule = contSemiEule + 1
-      
-      
-      
-      self.gerarVerticesEulerianos(cont, grau, obj, listaRR)     
-      cont2 = cont2 + 1
+      if cont == (qtdVertice-1):
+        n = naivePonte()  
+        ulitmoElemento = []
+        ulitmoElemento.append(1)
+        ulitmoElemento.append(cont+1)
+        matrizSalvamento[0].append(ulitmoElemento)
+        ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
+        matrizSalvamento[qtdVertice-1].append(ulitmoElementoInvert)
+      if cont == 1:
+        n = naivePonte()  
+        ulitmoElemento = []
+        ulitmoElemento.append(1)
+        elementoDest = math.floor(qtdVertice/2)
+        ulitmoElemento.append(elementoDest)
+        matrizSalvamento[0].append(ulitmoElemento)
+        ulitmoElementoInvert = n.inverterElemento(ulitmoElemento)
+        matrizSalvamento[elementoDest] = [] 
+        matrizSalvamento[elementoDest].append(ulitmoElementoInvert) 
       cont = cont + 1
-      
-      if isGrau2:
-        grau = temp
-        isGrau2 = False
+    
+    self.salvarMatrizEmArquivo(matrizSalvamento, obj) 
     
     
     obj.close()   
