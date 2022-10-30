@@ -1,8 +1,16 @@
+# Aluno: Vinícius Henrique Giovanini
+# Data: 30/10/2022
+
+
 from copy import deepcopy
 
 class naivePonte:
   
   # Funcoes de apoio do naive
+  
+  # ---
+  # Essa funcao pega uma aresta e inverte o destino com a origem.add()
+  # ---
   def inverterElemento(self, element):
     temp0= element[0]
     temp1 = element[1]
@@ -11,6 +19,10 @@ class naivePonte:
     valorNew[1] = temp0
     return valorNew
   
+  # ---
+  # Essa funcao recebe uma lista contendo varias arestas com origem e destino, e seleciona o destino
+  # de menor valor.
+  # ---
   def selecionandoMenorElemento(self, lista):
     resp = 10000000000000
     listaResposta = []
@@ -20,6 +32,10 @@ class naivePonte:
       listaResposta = item.copy()
     return listaResposta
  
+  # ---
+  # Essa duas funcoes abaixo pega o elemento que foi percorrido por exemplo 1-->2 e a primeira,
+  # testarCiclodeVoltaRemove remove o elemento de volta na matriz principal no caso o 2 --> 1,
+  # a funcao testarCiclodeVoltaRemovenaListComum, simplemente retorna se esse elemento existe.
   def testarCiclodeVoltaRemove(self, listaSup, valor):
     valor2 = valor.copy()
     destino = valor[1]
@@ -47,7 +63,9 @@ class naivePonte:
   
   # ---------------------------------------X-----------------------------------
   # Funcoes principais do naive
-  
+  # ---
+  # Verifica se o vertice ja foi percorrido.
+  # ---
   def verificarSeJaFoiPercorrido(self, lista, valor):
     resp = False
     if len(lista)==0:
@@ -59,6 +77,9 @@ class naivePonte:
         return resp
     return resp 
   
+  # ---
+  # Verifica a existencia de um certo valor na lista de destinos de um vertice.
+  # ---
   def verificarExistencia(self, lista, valor):
     for item in lista:
       if item[1] == valor:
@@ -71,7 +92,11 @@ class naivePonte:
         if item2[1] == item3[1]:
           return item2
     return []
-  
+  # ---
+  # Essa e a funcao buscaA que testa sempre pegando o menor elemento se forma um ciclo, garantindo
+  # assim se é ponte ou nao, retornando True caso exista ponte no caminho percorrido, e false se conseguir
+  # realizar o ciclo.
+  # ---
   def buscaA(self, destino, listaSUP, arestaOrigem):
     # TA FUNCIONANDO, SÓ TA DANDO O ERRO POIS QUANDO ELE TESTA TODOS OS MENORES E CHEGA EM LUGAR NENHUM ELE DA PAU, TEM
     # QUE FAZER ELE VOLTAR E SELECIONAR OUTRO CAMINHO DESDE O INICIO
@@ -150,6 +175,11 @@ class naivePonte:
        listaJaPercorrigos.append(menorElemento[0])
     return 1
   
+  # ---
+  # Funcao principal da classe, ela pega os vertices destino que foi passado para parametro,
+  # e testar se percorrendo o menor elemento é possivel realizar o ciclo, mandando o valor testado,
+  # que nao se encontrou o ciclo para a classe fleury adicionar na lista do caminho percorrido.
+  # ---
   def proxElemento(self, listaINICIAL, listaSUP):
     # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
     listaINICIALCOPY = listaINICIAL.copy()

@@ -1,7 +1,15 @@
+# Aluno: Vinícius Henrique Giovanini
+# Data: 30/10/2022
+
+
 from naive import naivePonte
 
 class fleuryAlg:
   
+  # ---
+  # Pega a linha e tranforma em uma lista contendo o primeiro e o segundo numero,
+  # referente a origem e o destino
+  # ---
   def tratarLinha(self, item):
     numerosTratados = []
     hasNumber1 = False
@@ -21,7 +29,11 @@ class fleuryAlg:
     numerosTratados.append(int(concatNumber2))
     
     return numerosTratados
-    
+   
+  # ---
+  # Pega a primeira linha referente a quantidade de elementos e linha, e retorna a
+  # quantidade de linhas.
+  # --- 
   def tratarPrmeiraLinhaQTD(self, item):
     cont = 0
     marcador = False
@@ -34,6 +46,9 @@ class fleuryAlg:
       cont = cont + 1
     return int(qtdNumero)
   
+  # ---
+  # Gera a lista de elemento da matriz
+  # ---
   def realizandoGeracaoLista(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber, ultimoElemento):
    if len(listaGuardarVértice) == 0:
     listaGuardarVértice.append(listaNumber[0])
@@ -53,6 +68,9 @@ class fleuryAlg:
      listaSUPREME.append(listaListaNumber.copy())
      listaListaNumber.clear()  
   
+  # ---
+  # Le do arquivo e gera a lista de origem e destino de cada elemento (vertice)
+  # ---
   def gerandoListas(self, nomeArq):
     
     strInterpolacao = "data/" + nomeArq + '.txt'
@@ -90,6 +108,10 @@ class fleuryAlg:
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
     return listaVerticeeArestas  
   
+  # ---
+  # Analisa posicao por posicao da matriz principal contando seu tamanho e verificando,
+  # quando elementos são impares e quantos são pares.
+  # ---
   def tipeGraph(self, nomeArq):
    listaVerticeeAresta = self.gerandoListas(nomeArq)
    contadorDeGrauImpar = 0
@@ -109,12 +131,19 @@ class fleuryAlg:
      print("Esse Grafo não é Euleriano")
      print("-----X----\n")
   
+  # ---
+  # Funcao que retorna a quantidade de vertices destino de um vertice.add()
+  # ---
   def verificarTamLista(self, l):
     resp = False
     if len(l) == 0:
       resp = True
     return resp
-    
+  
+  # ---
+  # Funcao que vai testar o menor elemento e tentar fazer o ciclo ou trajeto, e
+  # salvando em uma lista.
+  # ---
   def fleury(self, listaSUPREME, verticeInicial):
     # Precisa colocar o naive aqui para identificar pontes.
     destino = verticeInicial-1
@@ -139,6 +168,9 @@ class fleuryAlg:
                
     return caminhoLista  
   
+  # ---
+  # Depois que a funcao fleury gera a lista do ciclo ou trajeto percorrido, manda para
+  # essa funcao analisar se foi um ciclo ou um trajeto feito.
   def isCaminhoOrTrajeto(self, caminhoouTrajeto):
     primeiroElemento = caminhoouTrajeto[0].copy()
     ultimoElemento = caminhoouTrajeto[len(caminhoouTrajeto)-1]
@@ -147,7 +179,10 @@ class fleuryAlg:
     else:
       print("\n\nTrajeto Euleriano\n")
     
-    
+  # ---
+  # Funcao utilizada pela funcao fleury que pega o vertice manda para o naive testar se
+  # ir por esse caminho.
+  # ---
   def pesquisarCaminho(self, nomeArq, verticeInicial):
     listaVerticeeArestas = self.gerandoListas(nomeArq)
     # Pesquisa NAIVE

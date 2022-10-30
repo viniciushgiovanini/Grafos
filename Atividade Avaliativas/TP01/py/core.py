@@ -1,3 +1,7 @@
+# Aluno: Vinícius Henrique Giovanini
+# Data: 30/10/2022
+# Arquivo principal para rodar o TP01 de Grafos
+
 #imports
 from gerarGrafos import criarGrafos
 from fleury import fleuryAlg
