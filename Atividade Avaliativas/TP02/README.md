@@ -8,9 +8,9 @@
 
 ## Etapas
 
-[X] É preciso fazer o menu finalizar.  
-[X] Precisa fazer ele identificar erro na digitacao do arquivo de entrada.  
-[X] Fazer método de busca.  
+[✅] É preciso fazer o menu finalizar.  
+[✅] Precisa fazer ele identificar erro na digitacao do arquivo de entrada.  
+[❌] Fazer método de busca.  
 
 ## Linguagens de Programação
 
