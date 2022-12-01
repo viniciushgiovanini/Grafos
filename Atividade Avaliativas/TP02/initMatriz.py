@@ -1,8 +1,4 @@
 # Aluno: Vinícius Henrique Giovanini
-# Data: 30/10/2022
-
-
-from searchFluxoMax import buscaFluxo
 
 class gerarMatriz:
   
@@ -105,17 +101,6 @@ class gerarMatriz:
         contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
     return listaVerticeeArestas  
   
-
-  # ---
-  # Funcao que retorna a quantidade de vertices destino de um vertice.add()
-  # ---
-  def verificarTamLista(self, l):
-    resp = False
-    if len(l) == 0:
-      resp = True
-    return resp
-  
-    
   # ---
   # Funcao utilizada pela funcao fleury que pega o vertice manda para o naive testar se
   # ir por esse caminho.

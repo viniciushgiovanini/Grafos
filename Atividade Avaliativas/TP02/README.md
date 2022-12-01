@@ -9,8 +9,12 @@
 ## Etapas
 
 [✅] Adicionar arquivos py antigos.  
-[❌] Fazer adaptação para novo tp.    
+[✅] Fazer adaptação para novo tp.    
 [❌] Fazer método de busca.  
+  [❌] Fazer a navegacao chegar em um elemento vazio.  
+  [❌] Fazer a navegacao voltar para testar outros ramos.  
+    [❌] Tem que sincronizar com a lista de caminhos percorridos.  
+  [❌] Fazer ela trocar a aresta raiz caso não encontre o destino.  
 
 ## Linguagens de Programação
 
