@@ -44,26 +44,38 @@ class gerarMatriz:
     return int(qtdNumero)
   
   # ---
+  # Pegar a quantidade de vertices que tem no grafo
+  # ---
+  def tratarPrmeiraLinhaQTDVertices(self, item):
+    cont = 0
+    marcador = True
+    qtdNumero = ""
+    while cont < len(item) and marcador:
+       if item[cont] == ' ':
+         marcador = False
+       else:
+        qtdNumero = qtdNumero + item[cont]
+       cont = cont + 1
+    return int(qtdNumero)
+  
+  # ---
   # Gera a lista de elemento da matriz
   # ---
-  def realizandoGeracaoLista(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber, ultimoElemento):
+  def realizandoGeracaoLista(self, listaNumber, listaGuardarVértice, listaSUPREME, listaListaNumber):
    if len(listaGuardarVértice) == 0:
     listaGuardarVértice.append(listaNumber[0])
     listaListaNumber.append(list(listaNumber).copy())
-   elif (listaGuardarVértice[0] == listaNumber[0]) and not ultimoElemento:
+   elif (listaGuardarVértice[0] == listaNumber[0]):
     listaGuardarVértice.append(listaNumber[0])
     listaListaNumber.append(list(listaNumber).copy())
-   elif (listaGuardarVértice[0] != listaNumber[0]) and not ultimoElemento:
-    listaSUPREME.append(listaListaNumber.copy())
+   elif (listaGuardarVértice[0] != listaNumber[0]):
+    posicaoAdd = listaListaNumber[0][0]-1
+    listaSUPREME.pop(posicaoAdd)
+    listaSUPREME.insert(posicaoAdd,listaListaNumber.copy())
     listaListaNumber.clear()   
     listaGuardarVértice.clear()
     listaGuardarVértice.append(listaNumber[0])
     listaListaNumber.append(list(listaNumber).copy())
-   elif ultimoElemento:
-     listaGuardarVértice.append(listaNumber[0])
-     listaListaNumber.append(list(listaNumber).copy())
-     listaSUPREME.append(listaListaNumber.copy())
-     listaListaNumber.clear()  
   
   # ---
   # Le do arquivo e gera a lista de origem e destino de cada elemento (vertice)
@@ -75,15 +87,12 @@ class gerarMatriz:
     arquivinho = reader.readlines()
     contadorpularPrimeiraLinha = 0
     
-    # Variaveis Grafos Não eulerianos    
-    listaGuardarVértice = [] #esse lista é apra guardar os vértices para testar se é euleriano
+    listaGuardarVértice = [] 
     listaListaNumber = []
-    #qtd_Linha
-    qtddeLinhas = 1
-    # Fim variaveis grafos não eulerianos
+
     listaVerticeeArestas = []
     contadorLoopPrinci = 0
-    flagcontadorLoopPrinciUltimoElement = False
+    
     for item in arquivinho:
       
       if contadorpularPrimeiraLinha != 0:
@@ -92,28 +101,15 @@ class gerarMatriz:
         # Estou fazendo o flag com a quantidade de linha, melhor fazer com o ultimo elemento.
         
         # Testar se o grafo é Euleriano  
-        self.realizandoGeracaoLista(linhaTratada, listaGuardarVértice, listaVerticeeArestas, listaListaNumber, flagcontadorLoopPrinciUltimoElement)
-        if contadorLoopPrinci == qtddeLinhas -3:
-          flagcontadorLoopPrinciUltimoElement = True
+        self.realizandoGeracaoLista(linhaTratada, listaGuardarVértice, listaVerticeeArestas, listaListaNumber)
         contadorLoopPrinci = contadorLoopPrinci + 1
       else:
-        qtddeLinhas = self.tratarPrmeiraLinhaQTD(item)+1
-        contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
-    return listaVerticeeArestas  
-  
-  # ---
-  # Funcao utilizada pela funcao fleury que pega o vertice manda para o naive testar se
-  # ir por esse caminho.
-  # ---
-  def pesquisarCaminho(self, nomeArq, verticeInicial):
-    listaVerticeeArestas = self.gerandoListas(nomeArq)
-    # Pesquisa NAIVE
-    caimhoOuTrajeto = []   
-    caimhoOuTrajeto = list(self.fleury(listaVerticeeArestas, verticeInicial))
-    # for item in caimhoOuTrajeto:
-    #   print( str(item) + "\n")     
-    self.isCaminhoOrTrajeto(caimhoOuTrajeto)
+        qtddeVertices = self.tratarPrmeiraLinhaQTDVertices(item)
+        listaVerticeeArestas = [[]]*qtddeVertices
+      contadorpularPrimeiraLinha = contadorpularPrimeiraLinha + 1
     
-  
-  
-  
+    if item != []:
+      posicaoAdd = listaListaNumber[0][0]-1
+      listaVerticeeArestas.pop(posicaoAdd)
+      listaVerticeeArestas.insert(posicaoAdd,listaListaNumber.copy())
+    return listaVerticeeArestas  
