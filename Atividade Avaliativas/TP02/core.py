@@ -27,7 +27,7 @@ while(vLoop):
   #  origem = int(input("Digite o valor do vértice Origem."))
   #  destino = int(input("Digite o valor do vértice Destino"))
    fluxosMaximos = []
-   search.searchPrincipal(Matriz, 1, 4)
+   search.searchPrincipal(Matriz, 1, 16)
   #  print("\n")
   #  start = time.perf_counter()
   #  iniciarMatriz.tipeGraph(nomeArq)

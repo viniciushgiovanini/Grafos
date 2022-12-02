@@ -73,6 +73,22 @@ class buscaFluxo:
   def removerElementoPercorrido(self,listaSupreme, arestaOrigem):
     destino = arestaOrigem[0]-1
     listaSupreme[destino].remove(arestaOrigem)
+  
+  # ---
+  # Remove elemento de volta
+  # ---
+  def testarCiclodeVoltaRemove(self, listaSup, valor):
+    valor2 = valor.copy()
+    destino = valor[1]
+    tmp1 = valor[0]
+    valorDestino = listaSup[destino-1]
+    valor2[0] = destino
+    valor2[1] = tmp1
+    
+    for item in valorDestino:
+     if item == valor2:
+      listaSup[destino-1].remove(valor2)  
+  
   # ---
   # Verifica a existencia de um certo valor na lista de destinos de um vertice.
   # ---
@@ -87,32 +103,54 @@ class buscaFluxo:
   # ---
   def buscaA(self, listaSUP, arestaOrigem, verticeDestino):
     loop = True
+    # vertices ja percorridos
     caminhoVertice = []
+    # Caminho percorido
     caminho = []
-    origem = arestaOrigem[0]
-    conjuntoArestaNaOrigem = listaSUP[origem-1]
+    conjuntoArestaNaOrigem = listaSUP[arestaOrigem[0]-1]
     while loop:
       destino = arestaOrigem[1]
       conjuntoArestaNoDestino = listaSUP[destino-1]
-      isDestino = self.verificarExistencia(conjuntoArestaNoDestino, verticeDestino)
       self.removerElementoPercorrido(listaSUP, arestaOrigem)
-      if isDestino != []:
-        pass
-      
       caminho.append(arestaOrigem)
       caminhoVertice.append(arestaOrigem[0])
-      conjuntoArestaNaOrigem = conjuntoArestaNoDestino.copy()
-      loop2 = True
-      while loop2:
-       arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem)
-       isPercorrido = self.verificarSeJaFoiPercorrido(caminhoVertice, arestaOrigem[1])
-       
-       if isPercorrido:
-        conjuntoArestaNaOrigem.remove(arestaOrigem)
-        self.removerElementoPercorrido(listaSUP, arestaOrigem)
-       else:
-         loop2 = False
-
+      
+      if len(conjuntoArestaNoDestino)==0:
+        isArestas = False
+        contador = 0
+        # Tem que inverter o vetor aqui
+        caminhoVerticeRevert = caminhoVertice.copy()
+        caminhoVerticeRevert.reverse()
+        for item in caminhoVerticeRevert:
+         if not isArestas:
+          arestasDoVerticeAnalisado = listaSUP[item-1]
+          if len(arestasDoVerticeAnalisado)>0:
+            caminhoVertice.remove(item)
+            caminho.pop(len(caminho)-1)
+            conjuntoArestaNoDestino = listaSUP[item-1]
+            isArestas = True
+          else:
+           caminhoVerticeRevert.remove(item)
+           caminhoVerticeRevert.insert(contador, -1)
+           caminhoVertice.remove(item)
+           caminho.pop(len(caminho)-1)
+           contador = contador + 1
+        if not isArestas:
+          # Testou tudo desse ramo inicial, e não encontrou nada
+          # Retornar -10 para testar outra ramificacao da raiz (origem)
+          return -10
+        
+      
+      conjuntoArestaNaOrigem = conjuntoArestaNoDestino
+      arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem)
+      self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
+      
+      
+      
+      
+      if arestaOrigem[1] == verticeDestino:
+        caminho.append(arestaOrigem)
+        return caminho
     pass
   
   # ---
@@ -122,20 +160,10 @@ class buscaFluxo:
     # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
     listaINICIALCOPY = listaINICIAL.copy()
     listaINICIALCOPY.sort()
-    tamListaInicial = len(listaINICIAL)
-    contQtdVerificados = 0
     for item in listaINICIALCOPY:
-      if tamListaInicial !=1 and contQtdVerificados != (tamListaInicial-1):
-        resp = self.buscaA(M, item, verticeDestino)
-      else:
-        resp = 0
-      if resp == 0:
-        self.testarCiclodeVoltaRemove(M, item)
-        return item
-      contQtdVerificados = contQtdVerificados + 1
-    if resp == 1:
-      itemA = listaINICIALCOPY[len(listaINICIALCOPY)-1]
-      return itemA
+     resp = self.buscaA(M, item, verticeDestino)
+     if resp != []:
+       return resp
    
    
   # ---
@@ -144,6 +172,6 @@ class buscaFluxo:
   def searchPrincipal(self, m, origem, destino):
     loop = True
     lVertices = m[origem-1]
-    caminhoEncontrado = list(self.proxElemento(lVertices, m, destino))
-      
+    menorElementoRaiz = self.selecionandoMenorElemento(lVertices)
+    resp = self.buscaA(m, menorElementoRaiz, destino)
   

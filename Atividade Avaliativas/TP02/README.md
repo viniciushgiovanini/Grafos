@@ -11,11 +11,12 @@
 [✅] Adicionar arquivos py antigos.  
 [✅] Fazer adaptação para novo tp.    
 [❌] Fazer método de busca.  
-  [❌] Fazer a navegacao chegar em um elemento vazio.  
-  [❌] Fazer a navegacao voltar para testar outros ramos.  
-    [❌] Tem que sincronizar com a lista de caminhos percorridos.  
-  [❌] Fazer ela trocar a aresta raiz caso não encontre o destino.  
+  [✅] Fazer a navegacao chegar em um elemento vazio.  
+  [✅] Fazer a navegacao voltar para testar outros ramos.  
+    [✅] Tem que sincronizar com a lista de caminhos percorridos.  
+  [✅] Fazer ela trocar a aresta raiz caso não encontre o destino.  
 
+- Falta testar o programa bater em uma folha vazia voltar e encontrar um ramo que também não seja o escolhido.  
 ## Linguagens de Programação
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="50px"/>
