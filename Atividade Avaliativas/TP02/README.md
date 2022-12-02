@@ -9,14 +9,14 @@
 ## Etapas
 
 [✅] Adicionar arquivos py antigos.  
-[✅] Fazer adaptação para novo tp.    
+[✅] Fazer adaptação para novo tp.  
 [❌] Fazer método de busca.  
 [✅] Fazer a navegacao chegar em um elemento vazio.  
 [✅] Fazer a navegacao voltar para testar outros ramos.  
 [✅] Tem que sincronizar com a lista de caminhos percorridos.  
 [✅] Fazer ela trocar a aresta raiz caso não encontre o destino.  
 [❌] (TESTE) Falta testar o programa bater em uma folha vazia voltar e encontrar um ramo que também não seja o escolhido.  
-[❌] Programa termina quando encontra o vertice, ele tem que testar todas as arestas da raiz ainda.  
+[✅] Programa termina quando encontra o vertice, ele tem que testar todas as arestas da raiz ainda.  
 [❌] Imprimir caminhos e quantidade descobertas.  
 ## Linguagens de Programação
 

@@ -138,7 +138,7 @@ class buscaFluxo:
         if not isArestas:
           # Testou tudo desse ramo inicial, e não encontrou nada
           # Retornar -10 para testar outra ramificacao da raiz (origem)
-          return -10
+          return []
         
       
       
@@ -148,33 +148,27 @@ class buscaFluxo:
       arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem)
       
       
-      
-      
-      if arestaOrigem[1] == verticeDestino:
-        self.removerElementoPercorrido(listaSUP, arestaOrigem)
-        caminho.append(arestaOrigem)
-        return caminho
-    pass
-  
-  # ---
-  # Essa funcao vai ser responsavel por variar a base da pesquisa, entao ela vai cudar as arestas do vértice raiz
-  # ---
-  def proxElemento(self, listaINICIAL, M, verticeDestino):
-    # Tem que fazer uma busca em largura para descobrir se é ponte ou não.
-    listaINICIALCOPY = listaINICIAL.copy()
-    listaINICIALCOPY.sort()
-    for item in listaINICIALCOPY:
-     resp = self.buscaA(M, item, verticeDestino)
-     if resp != []:
-       return resp
-   
-   
+      if len(arestaOrigem)>0:
+       if arestaOrigem[1] == verticeDestino:
+         self.removerElementoPercorrido(listaSUP, arestaOrigem)
+         caminho.append(arestaOrigem)
+         return caminho
+      else:
+        # Não precisou fazer backtrack pq o grafo era um ciclo mas ficou vazio
+        return []  
+
   # ---
   # Funcao principal que vai organizar a chamada de busca até encontrar o vertice destino
   # ---
   def searchPrincipal(self, m, origem, destino):
-    loop = True
     lVertices = m[origem-1]
-    menorElementoRaiz = self.selecionandoMenorElemento(lVertices)
-    resp = self.buscaA(m, menorElementoRaiz, destino)
+    lVertices.sort()
+    caminhosPercorridos = []
+    while(len(lVertices)>0):
+     resp = self.buscaA(m, lVertices[0], destino)
+     if resp != []:
+       caminhosPercorridos.append(resp.copy())
+       resp.clear()
+    
+    print("teste")
   
