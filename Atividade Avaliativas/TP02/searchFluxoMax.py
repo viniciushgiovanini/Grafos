@@ -141,14 +141,17 @@ class buscaFluxo:
           return -10
         
       
+      
+      
+      self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
       arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem)
-      self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       
       
       
       
       if arestaOrigem[1] == verticeDestino:
+        self.removerElementoPercorrido(listaSUP, arestaOrigem)
         caminho.append(arestaOrigem)
         return caminho
     pass
