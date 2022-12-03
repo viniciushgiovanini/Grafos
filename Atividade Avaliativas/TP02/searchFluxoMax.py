@@ -3,6 +3,16 @@
 from copy import deepcopy
 
 class buscaFluxo:
+  # ---
+  # Essa funcao pega uma aresta e inverte o destino com a origem.add()
+  # ---
+  def inverterElemento(self, element):
+    temp0= element[0]
+    temp1 = element[1]
+    valorNew = element.copy()
+    valorNew[0] = temp1
+    valorNew[1] = temp0
+    return valorNew
   
   # Funcoes de apoio da pesquisa
   
@@ -10,13 +20,15 @@ class buscaFluxo:
   # Essa funcao recebe uma lista contendo varias arestas com origem e destino, e seleciona o destino
   # de menor valor.
   # ---
-  def selecionandoMenorElemento(self, lista):
+  def selecionandoMenorElemento(self, lista, caminho):
     resp = 10000000000000
     listaResposta = []
     for item in lista:
-     if item[1] < resp:
-      resp = item[1]
-      listaResposta = item.copy()
+     itemInvert = self.inverterElemento(item)
+     if itemInvert not in caminho:
+      if item[1] < resp:
+       resp = item[1]
+       listaResposta = item.copy()
     return listaResposta
   
   # ---
@@ -47,7 +59,7 @@ class buscaFluxo:
      if item == valor2:
       lista.remove(valor2)     
     return lista
-   
+  
    
   # ---------------------------------------X-----------------------------------
   # Funcoes principais da pesquisa
@@ -124,7 +136,7 @@ class buscaFluxo:
         for item in caminhoVerticeRevert:
          if not isArestas:
           arestasDoVerticeAnalisado = listaSUP[item-1]
-          if len(arestasDoVerticeAnalisado)>0:
+          if len(arestasDoVerticeAnalisado)>1:
             caminhoVertice.remove(item)
             caminho.pop(len(caminho)-1)
             conjuntoArestaNoDestino = listaSUP[item-1]
@@ -145,13 +157,17 @@ class buscaFluxo:
       
       self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
-      arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem)
-      
+      elementoInvertido = self.inverterElemento(arestaOrigem)
+      arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem, caminho)
+      listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
       
       if len(arestaOrigem)>0:
        if arestaOrigem[1] == verticeDestino:
-         self.removerElementoPercorrido(listaSUP, arestaOrigem)
+        #  self.removerElementoPercorrido(listaSUP, arestaOrigem)
          caminho.append(arestaOrigem)
+         elementoInvertido = self.inverterElemento(arestaOrigem)
+         listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
+         self.removerElementoPercorrido(listaSUP, arestaOrigem)
          return caminho
       else:
         # Não precisou fazer backtrack pq o grafo era um ciclo mas ficou vazio
