@@ -113,6 +113,12 @@ class buscaFluxo:
   # ---
   # Essa e a funcao que vai realizar a navegacao até encontrar o vértice desejado ou percorrer todos os vértices.
   # ---
+  
+  # PAREI AQUI DIA 03 DE MADRUGS, EU TENHO QUE FAZER AGORA ELE NÃO TESTAR O CAMINHO DE VOLTA NA VARIAVEL ARESTASDOVERTICEANALISADO
+  # E QUANDO DER CERTO E ELE ACHAR UMA ARESTA PARA CONTINUAR EU TENHO QUE FAZER A MESMA COISA PARA EVITAR QUE ELE VOLTE POR
+  # UM CAMINHO JA PERCORRIDO.
+  
+  
   def buscaA(self, listaSUP, arestaOrigem, verticeDestino):
     loop = True
     # vertices ja percorridos
@@ -130,18 +136,22 @@ class buscaFluxo:
       if len(conjuntoArestaNoDestino)==0:
         isArestas = False
         contador = 0
-        # Tem que inverter o vetor aqui
+        listaSUP[arestaOrigem[0]-1].append(arestaOrigem.copy())
         caminhoVerticeRevert = caminhoVertice.copy()
         caminhoVerticeRevert.reverse()
         for item in caminhoVerticeRevert:
          if not isArestas:
           arestasDoVerticeAnalisado = listaSUP[item-1]
           if len(arestasDoVerticeAnalisado)>1:
-            caminhoVertice.remove(item)
-            caminho.pop(len(caminho)-1)
-            conjuntoArestaNoDestino = listaSUP[item-1]
-            isArestas = True
+            if not item in caminhoVertice:
+             caminhoVertice.remove(item)
+             caminho.pop(len(caminho)-1)
+             conjuntoArestaNoDestino = listaSUP[item-1]
+             isArestas = True
           else:
+           elementoInvertido = self.inverterElemento(arestasDoVerticeAnalisado[0])
+           listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
+           listaSUP[arestasDoVerticeAnalisado[0][0]-1].remove(arestasDoVerticeAnalisado[0])
            caminhoVerticeRevert.remove(item)
            caminhoVerticeRevert.insert(contador, -1)
            caminhoVertice.remove(item)
