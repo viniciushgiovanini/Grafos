@@ -136,7 +136,7 @@ class buscaFluxo:
     return qtd
   
   
-    # ---
+   # ---
   # Pega a qtd dos vertices adjacentes ignorando o caminho que veio
   # ---
   def selecionarMenorElementoNaoPercorrido(self, listaVertices, valorIda):
@@ -147,14 +147,21 @@ class buscaFluxo:
        if itemInvert not in valorIda:
         qtd.append(item)
     return qtd
+  
+  
+  def inverterCaminhoPercorrido(self, m, caminho):
+    for item in caminho:
+     origem = item[0]-1
+     destino = item[1]-1
+     arestaInvertida  = self.inverterElemento(item)
+     m[origem].remove(item)
+     m[destino].append(arestaInvertida)
+  
+  
+  
   # ---
   # Essa e a funcao que vai realizar a navegacao até encontrar o vértice desejado ou percorrer todos os vértices.
   # ---
-  
-  # PAREI AQUI DIA 03 DE MADRUGS, EU TENHO QUE FAZER AGORA ELE NÃO TESTAR O CAMINHO DE VOLTA NA VARIAVEL ARESTASDOVERTICEANALISADO
-  # E QUANDO DER CERTO E ELE ACHAR UMA ARESTA PARA CONTINUAR EU TENHO QUE FAZER A MESMA COISA PARA EVITAR QUE ELE VOLTE POR
-  # UM CAMINHO JA PERCORRIDO.
-  
   
   def buscaA(self, listaSUP, arestaOrigem, verticeDestino):
     loop = True
@@ -162,30 +169,38 @@ class buscaFluxo:
     caminhoVertice = []
     # Caminho percorido
     caminho = []
+    caminhoTotalBT = []
+    caminhoDebug = []
     conjuntoArestaNaOrigem = listaSUP[arestaOrigem[0]-1]
     while loop:
       destino = arestaOrigem[1]
       conjuntoArestaNoDestino = listaSUP[destino-1]
-      self.removerElementoPercorrido(listaSUP, arestaOrigem)
+      # self.removerElementoPercorrido(listaSUP, arestaOrigem)
       caminho.append(arestaOrigem.copy())
+      caminhoTotalBT.append(arestaOrigem.copy())
+      caminhoDebug.append(arestaOrigem.copy()) #linha de depuracoa
+      
+      if len(caminhoDebug)==300:
+        caminhoDebug = []
+      
       caminhoVertice.append(arestaOrigem[0])
       backTrack = False
-      
-      if len(conjuntoArestaNoDestino)==0:
+      valorT = self.qtdVerticesAdjSemPercorrido(conjuntoArestaNoDestino, caminhoTotalBT)
+      if valorT == 0:
         # marcador = False
         isArestas = False
         contador = 0
-        elementoInvertido1 = self.inverterElemento(arestaOrigem)
-        listaSUP[elementoInvertido1[0]-1].append(elementoInvertido1)
+        # elementoInvertido1 = self.inverterElemento(arestaOrigem)
+        # listaSUP[elementoInvertido1[0]-1].append(elementoInvertido1)
         caminhoVerticeRevert = caminhoVertice.copy()
         caminhoVerticeRevert.reverse()
         for item in caminhoVerticeRevert:
          if not isArestas:
           arestasDoVerticeAnalisado = listaSUP[item-1]
-          qtdADJnPercorrido = self.qtdVerticesAdjSemPercorrido(arestasDoVerticeAnalisado, caminho)
+          qtdADJnPercorrido = self.qtdVerticesAdjSemPercorrido(arestasDoVerticeAnalisado, caminhoTotalBT)
           if qtdADJnPercorrido>0:
              caminhoVertice.remove(item)
-             verticesNpercorridos = self.selecionarMenorElementoNaoPercorrido(arestasDoVerticeAnalisado, caminho)
+             verticesNpercorridos = self.selecionarMenorElementoNaoPercorrido(arestasDoVerticeAnalisado, caminhoTotalBT)
              caminho.pop(len(caminho)-1)
              conjuntoArestaNoDestino = listaSUP[item-1]
              isArestas = True
@@ -209,26 +224,22 @@ class buscaFluxo:
           # Testou tudo desse ramo inicial, e não encontrou nada
           # Retornar -10 para testar outra ramificacao da raiz (origem)
           return []
-        
       
       
       
       self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
-      elementoInvertido = self.inverterElemento(arestaOrigem)
+      # elementoInvertido = self.inverterElemento(arestaOrigem)
       if not backTrack:
-       arestaOrigem = self.selecionandoMenorElemento(conjuntoArestaNaOrigem, caminho)
-      listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
+       conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
+       arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
+      # listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
       
       if len(arestaOrigem)>0:
        if arestaOrigem[1] == verticeDestino:
-        #  self.removerElementoPercorrido(listaSUP, arestaOrigem)
          caminho.append(arestaOrigem)
-         elementoInvertido = self.inverterElemento(arestaOrigem)
-         listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
-         self.removerElementoPercorrido(listaSUP, arestaOrigem)
-         self.excluirArestaRepetida(listaSUP[arestaOrigem[1]-1], self.inverterElemento(arestaOrigem))
-        
+        #  funcao para inverter arestas no caminho percorido
+         self.inverterCaminhoPercorrido(listaSUP, caminho)
          return caminho
       else:
         # Não precisou fazer backtrack pq o grafo era um ciclo mas ficou vazio
@@ -248,6 +259,8 @@ class buscaFluxo:
      if resp != []:
        caminhosPercorridos.append(resp.copy())
        resp.clear()
+     else:
+       lVertices.pop(0)
      cont = cont + 1
     
     print("teste")

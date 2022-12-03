@@ -23,11 +23,11 @@ while(vLoop):
    search = buscaFluxo()
    print("\n")
   #  nomeArq = input("Digite o nome do arquivo a ser lido: ")
-   Matriz = iniciarMatriz.gerandoListas("grafotesteab").copy()
+   Matriz = iniciarMatriz.gerandoListas("graph-test-50000").copy()
   #  origem = int(input("Digite o valor do vértice Origem."))
   #  destino = int(input("Digite o valor do vértice Destino"))
    fluxosMaximos = []
-   search.searchPrincipal(Matriz, 1, 8)
+   search.searchPrincipal(Matriz, 1, 17)
   #  print("\n")
   #  start = time.perf_counter()
   #  iniciarMatriz.tipeGraph(nomeArq)
