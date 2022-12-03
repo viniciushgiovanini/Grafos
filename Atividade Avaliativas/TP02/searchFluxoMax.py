@@ -63,6 +63,18 @@ class buscaFluxo:
    
   # ---------------------------------------X-----------------------------------
   # Funcoes principais da pesquisa
+  
+  # ---
+  # funcao para testar se tem aresta repetida
+  # ---
+  def excluirArestaRepetida(self, listaAdj, arestaProducra):
+    qtd = 0
+    for item in listaAdj:
+     if item == arestaProducra:
+       qtd = qtd + 1
+    if qtd > 1:
+      listaAdj.remove(arestaProducra)
+  
   # ---
   # Verifica se o vertice ja foi percorrido.
   # ---
@@ -215,6 +227,8 @@ class buscaFluxo:
          elementoInvertido = self.inverterElemento(arestaOrigem)
          listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
          self.removerElementoPercorrido(listaSUP, arestaOrigem)
+         self.excluirArestaRepetida(listaSUP[arestaOrigem[1]-1], self.inverterElemento(arestaOrigem))
+        
          return caminho
       else:
         # Não precisou fazer backtrack pq o grafo era um ciclo mas ficou vazio
