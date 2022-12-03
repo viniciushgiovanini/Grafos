@@ -172,7 +172,7 @@ class buscaFluxo:
       backTrack = False
       
       if len(conjuntoArestaNoDestino)==0:
-        marcador = False
+        # marcador = False
         isArestas = False
         contador = 0
         elementoInvertido1 = self.inverterElemento(arestaOrigem)
@@ -192,14 +192,14 @@ class buscaFluxo:
              backTrack = True
              arestaOrigem = self.selecionandoMenorElemento(verticesNpercorridos, caminho)
           else:
-           if not marcador:
-             elementoInvertido = self.inverterElemento(arestaOrigem)
-             listaSUP[arestaOrigem[0]-1].append(arestaOrigem)
-             listaSUP[elementoInvertido[0]-1].remove(elementoInvertido)
-             marcador = True
-           elementoInvertido = self.inverterElemento(arestasDoVerticeAnalisado[0])
-           listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
-           listaSUP[arestasDoVerticeAnalisado[0][0]-1].remove(arestasDoVerticeAnalisado[0])
+          #  if not marcador:
+          #    elementoInvertido = self.inverterElemento(arestaOrigem)
+          #    listaSUP[arestaOrigem[0]-1].append(arestaOrigem)
+          #    listaSUP[elementoInvertido[0]-1].remove(elementoInvertido)
+          #    marcador = True
+          #  elementoInvertido = self.inverterElemento(arestasDoVerticeAnalisado[0])
+          #  listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
+          #  listaSUP[arestasDoVerticeAnalisado[0][0]-1].remove(arestasDoVerticeAnalisado[0])
            caminhoVerticeRevert.remove(item)
            caminhoVerticeRevert.insert(contador, -1)
            caminhoVertice.remove(item)
@@ -241,11 +241,14 @@ class buscaFluxo:
     lVertices = m[origem-1]
     lVertices.sort()
     caminhosPercorridos = []
-    while(len(lVertices)>0):
+    qtdDeVerticesAdjacentes = len(lVertices)
+    cont = 0
+    while(len(lVertices)>0 and cont < qtdDeVerticesAdjacentes ):
      resp = self.buscaA(m, lVertices[0], destino)
      if resp != []:
        caminhosPercorridos.append(resp.copy())
        resp.clear()
+     cont = cont + 1
     
     print("teste")
   
