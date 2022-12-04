@@ -83,7 +83,13 @@ class gerarMatriz:
   def gerandoListas(self, nomeArq):
     
     strInterpolacao = "db/" + nomeArq + '.txt'
-    reader = open(strInterpolacao, "r")  
+    
+    try:
+     reader = open(strInterpolacao, "r")  
+    except:
+      print('\nArquivo não encontrado. OBS: Digite o nome do arquivo sem sua extenção (arquivo somente e não arquivo.txt)\n')
+      return []
+    
     arquivinho = reader.readlines()
     contadorpularPrimeiraLinha = 0
     
