@@ -3,6 +3,7 @@
 #imports
 from initMatriz import gerarMatriz
 from searchFluxoMax import buscaFluxo
+from createGraph import criarG
 import time
 # from copy import deepcopy
 start = 0
@@ -34,7 +35,10 @@ while(vLoop):
     print("Tempo de Execucao da Descoberta: ", end - start)
     print("-----X----\n")
   elif numeroCase == 2:
-    pass
+    nomeGerarGraph = str(input("Digite o nome do arquivo a ser criado: "))
+    qtdK = int(input("Digite o número de grafos com 4 arestas interligadas você deseja!: "))
+    gGraph = criarG()
+    gGraph.gerarMatrizPrinci(qtdK , nomeGerarGraph)
   else:
     print("Valor inserido não existe !")
   print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer")
