@@ -1,6 +1,6 @@
 # Aluno: Vinícius Henrique Giovanini
 
-from copy import deepcopy
+# from copy import deepcopy
 
 class buscaFluxo:
   # ---
@@ -35,6 +35,7 @@ class buscaFluxo:
   # Essa duas funcoes abaixo pega o elemento que foi percorrido por exemplo 1-->2 e a primeira,
   # testarCiclodeVoltaRemove remove o elemento de volta na matriz principal no caso o 2 --> 1,
   # a funcao testarCiclodeVoltaRemovenaListComum, simplemente retorna se esse elemento existe.
+  # ---
   def testarCiclodeVoltaRemove(self, listaSup, valor):
     valor2 = valor.copy()
     destino = valor[1]
@@ -47,56 +48,9 @@ class buscaFluxo:
      if item == valor2:
       listaSup[destino-1].remove(valor2)  
       
-  def testarCiclodeVoltaRemovenaListComum(self, lista, valor):
-    valor2 = valor.copy()
-    destino = valor[1]
-    tmp1 = valor[0]
-    valorDestino = lista
-    valor2[0] = destino
-    valor2[1] = tmp1
-    
-    for item in valorDestino:
-     if item == valor2:
-      lista.remove(valor2)     
-    return lista
-  
    
   # ---------------------------------------X-----------------------------------
   # Funcoes principais da pesquisa
-  
-  # ---
-  # funcao para testar se tem aresta repetida
-  # ---
-  def excluirArestaRepetida(self, listaAdj, arestaProducra):
-    qtd = 0
-    for item in listaAdj:
-     if item == arestaProducra:
-       qtd = qtd + 1
-    if qtd > 1:
-      listaAdj.remove(arestaProducra)
-  
-  # ---
-  # Verifica se o vertice ja foi percorrido.
-  # ---
-  def verificarSeJaFoiPercorrido(self, lista, valor):
-    resp = False
-    if len(lista)==0:
-      return resp
-    else:
-     for item in lista:
-      if item == valor:
-        resp = True
-        return resp
-    return resp 
-  
-  
-  
-  # ---
-  # funcao para remover elemento percorrido
-  # ---
-  def removerElementoPercorrido(self,listaSupreme, arestaOrigem):
-    destino = arestaOrigem[0]-1
-    listaSupreme[destino].remove(arestaOrigem)
   
   # ---
   # Remove elemento de volta
@@ -112,16 +66,7 @@ class buscaFluxo:
     for item in valorDestino:
      if item == valor2:
       listaSup[destino-1].remove(valor2)  
-  
-  # ---
-  # Verifica a existencia de um certo valor na lista de destinos de um vertice.
-  # ---
-  def verificarExistencia(self, lista, valor):
-    for item in lista:
-      if item[0] == valor:
-        return item
-    return []
-  
+
   # ---
   # Pega a qtd dos vertices adjacentes ignorando o caminho que veio
   # ---
@@ -148,7 +93,9 @@ class buscaFluxo:
         qtd.append(item)
     return qtd
   
-  
+  # ---
+  # Essa funcao inverterCaminhoPercorrido inverte toda a lista de vertices adjacentes.add()
+  # ---
   def inverterCaminhoPercorrido(self, m, caminho):
     for item in caminho:
      origem = item[0]-1
@@ -165,33 +112,28 @@ class buscaFluxo:
   
   def buscaA(self, listaSUP, arestaOrigem, verticeDestino):
     loop = True
-    # vertices ja percorridos
     caminhoVertice = []
-    # Caminho percorido
     caminho = []
     caminhoTotalBT = []
-    caminhoDebug = []
+    # caminhoDebug = []
     conjuntoArestaNaOrigem = listaSUP[arestaOrigem[0]-1]
     while loop:
       destino = arestaOrigem[1]
       conjuntoArestaNoDestino = listaSUP[destino-1]
-      # self.removerElementoPercorrido(listaSUP, arestaOrigem)
       caminho.append(arestaOrigem.copy())
       caminhoTotalBT.append(arestaOrigem.copy())
-      caminhoDebug.append(arestaOrigem.copy()) #linha de depuracoa
       
-      if len(caminhoDebug)==300:
-        caminhoDebug = []
+      
+      # caminhoDebug.append(arestaOrigem.copy()) #linha de depuracoa
+      # if len(caminhoDebug)==300:
+      #   caminhoDebug = []
       
       caminhoVertice.append(arestaOrigem[0])
       backTrack = False
       valorT = self.qtdVerticesAdjSemPercorrido(conjuntoArestaNoDestino, caminhoTotalBT)
       if valorT == 0:
-        # marcador = False
         isArestas = False
         contador = 0
-        # elementoInvertido1 = self.inverterElemento(arestaOrigem)
-        # listaSUP[elementoInvertido1[0]-1].append(elementoInvertido1)
         caminhoVerticeRevert = caminhoVertice.copy()
         caminhoVerticeRevert.reverse()
         for item in caminhoVerticeRevert:
@@ -207,14 +149,6 @@ class buscaFluxo:
              backTrack = True
              arestaOrigem = self.selecionandoMenorElemento(verticesNpercorridos, caminho)
           else:
-          #  if not marcador:
-          #    elementoInvertido = self.inverterElemento(arestaOrigem)
-          #    listaSUP[arestaOrigem[0]-1].append(arestaOrigem)
-          #    listaSUP[elementoInvertido[0]-1].remove(elementoInvertido)
-          #    marcador = True
-          #  elementoInvertido = self.inverterElemento(arestasDoVerticeAnalisado[0])
-          #  listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
-          #  listaSUP[arestasDoVerticeAnalisado[0][0]-1].remove(arestasDoVerticeAnalisado[0])
            caminhoVerticeRevert.remove(item)
            caminhoVerticeRevert.insert(contador, -1)
            caminhoVertice.remove(item)
@@ -229,11 +163,9 @@ class buscaFluxo:
       
       self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
-      # elementoInvertido = self.inverterElemento(arestaOrigem)
       if not backTrack:
        conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
        arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
-      # listaSUP[elementoInvertido[0]-1].append(elementoInvertido)
       
       if len(arestaOrigem)>0:
        if arestaOrigem[1] == verticeDestino:
@@ -252,16 +184,14 @@ class buscaFluxo:
     lVertices = m[origem-1]
     lVertices.sort()
     caminhosPercorridos = []
-    qtdDeVerticesAdjacentes = len(lVertices)
     cont = 0
-    while(len(lVertices)>0 and cont < qtdDeVerticesAdjacentes ):
-     resp = self.buscaA(m, lVertices[0], destino)
+    while(len(lVertices) > 0 and cont < len(lVertices)):
+     resp = self.buscaA(m, lVertices[cont], destino)
      if resp != []:
        caminhosPercorridos.append(resp.copy())
        resp.clear()
      else:
-       lVertices.pop(0)
-     cont = cont + 1
+       cont = cont + 1
     
-    print("teste")
+    return caminhosPercorridos
   

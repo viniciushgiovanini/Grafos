@@ -4,7 +4,7 @@
 from initMatriz import gerarMatriz
 from searchFluxoMax import buscaFluxo
 import time
-from copy import deepcopy
+# from copy import deepcopy
 start = 0
 end = 0
 
@@ -23,11 +23,11 @@ while(vLoop):
    search = buscaFluxo()
    print("\n")
   #  nomeArq = input("Digite o nome do arquivo a ser lido: ")
-   Matriz = iniciarMatriz.gerandoListas("graph-test-50000").copy()
+   Matriz = iniciarMatriz.gerandoListas("euleriano10MIL").copy()
   #  origem = int(input("Digite o valor do vértice Origem."))
   #  destino = int(input("Digite o valor do vértice Destino"))
    fluxosMaximos = []
-   search.searchPrincipal(Matriz, 1, 17)
+   search.searchPrincipal(Matriz, 1, 8)
   #  print("\n")
   #  start = time.perf_counter()
   #  iniciarMatriz.tipeGraph(nomeArq)
