@@ -179,6 +179,8 @@ class buscaFluxo:
 
   # ---
   # Funcao principal que vai organizar a chamada de busca até encontrar o vertice destino
+  # Aqui irá testar até que não exista mais aresta saindo da origem, ou não tiver mais encontrando o resultado
+  # Quando ele sair de um ramo e não encontrar o resultado ele pula para o outro ramo/vertice adjacente.
   # ---
   def searchPrincipal(self, m, origem, destino):
     lVertices = m[origem-1]
