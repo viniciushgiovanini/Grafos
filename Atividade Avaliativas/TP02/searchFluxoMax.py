@@ -105,6 +105,18 @@ class buscaFluxo:
      m[destino].append(arestaInvertida)
   
   
+  # ---
+  # Funcao para testar se algum vertice adjacente é o vertice desejado para evitar que escolha um ramo mais longo para percorrer
+  # sendo que tem o caminho mais curto.add()
+  # ---
+  def analisarVerticesAdj(self, listaVerticesAdj, verticeDestino):
+    resp = []
+    for item in listaVerticesAdj:
+     if item[1] == verticeDestino:
+       resp = item.copy()
+       return resp
+    return resp
+  
   
   # ---
   # Essa e a funcao que vai realizar a navegacao até encontrar o vértice desejado ou percorrer todos os vértices.
@@ -163,13 +175,18 @@ class buscaFluxo:
       
       self.testarCiclodeVoltaRemove(listaSUP, arestaOrigem)
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
+      # Testar se vertices ajc tem caminho para o vertice desejado, se tiver pula o back track, e seleciona esta aresta
+      isVerticeAdj = self.analisarVerticesAdj(conjuntoArestaNoDestino,verticeDestino)
       if not backTrack:
        conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
        arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
       
-      if len(arestaOrigem)>0:
-       if arestaOrigem[1] == verticeDestino:
-         caminho.append(arestaOrigem)
+      if len(arestaOrigem)>0 or isVerticeAdj != []:
+       if arestaOrigem[1] == verticeDestino or isVerticeAdj != []:
+         if isVerticeAdj != []:
+           caminho.append(isVerticeAdj)
+         else:
+           caminho.append(arestaOrigem)
         #  funcao para inverter arestas no caminho percorido
          self.inverterCaminhoPercorrido(listaSUP, caminho)
          return caminho
