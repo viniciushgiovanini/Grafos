@@ -27,9 +27,9 @@ class criarG:
        open(strInterpolacao, 'w').close()
      obj = open(strInterpolacao, 'r+')
      
-    #  qtdLinhas =  (qtdVertices*3) + ((qtdVertices/4)-1)
+     qtdLinhas =  (qtdVertices*3) + ((((qtdVertices/4)-1)*2))
 
-     qtdLinhas =  ((qtdVertices*3)/2) + ((qtdVertices/4))
+    #  qtdLinhas =  ((qtdVertices*3)/2) + ((qtdVertices/4))
      
      linhaum = str(int(qtdVertices)) + " " + str(int(qtdLinhas)+1) + "\n"
      obj.write(linhaum)
@@ -76,15 +76,12 @@ class criarG:
        listaDestino.remove(item)
        cont=0
        while(cont<3):
-         if len(m) == 0 or len(m) <= (listaDestino[0]-1) or len(m[listaDestino[0]-1]) < (cont -1):
-          arestaOrigem.append(item)
-          arestaOrigem.append(listaDestino[0])
-          verticesAdj.append(arestaOrigem.copy())
-          listaDestino.pop(0)
-          arestaOrigem.clear()
-         else:
-          listaDestino.pop(0)
-         cont = cont +1
+        arestaOrigem.append(item)
+        arestaOrigem.append(listaDestino[0])
+        verticesAdj.append(arestaOrigem.copy())
+        listaDestino.pop(0)
+        arestaOrigem.clear()
+        cont = cont +1
        m.append(verticesAdj.copy())
         
  
