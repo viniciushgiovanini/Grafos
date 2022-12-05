@@ -29,10 +29,14 @@ while(vLoop):
    Matriz = iniciarMatriz.gerandoListas(nomeArq).copy()
    if Matriz != []:
     fluxosMaximos = []
-    search.searchPrincipal(Matriz, origem, destino)
+    retorno = search.searchPrincipal(Matriz, origem, destino)
     print("\n")
     end = time.perf_counter()
     print("Tempo de Execucao da Descoberta: ", end - start)
+    
+    frase = "\nFoi encontrado (" + str(len(retorno)) + ") caminhos neste grafo !\n" 
+    print(frase)
+        
     print("-----X----\n")
   elif numeroCase == 2:
     nomeGerarGraph = str(input("Digite o nome do arquivo a ser criado: "))
@@ -41,5 +45,5 @@ while(vLoop):
     gGraph.gerarMatrizPrinci(qtdK , nomeGerarGraph)
   else:
     print("Valor inserido não existe !")
-  print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer")
+  print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer | 2 - Realizar Geração de um Grafo")
   numeroCase = int(input("Escreva o número desejado !\n"))

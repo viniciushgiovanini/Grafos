@@ -13,9 +13,9 @@
 [✅] Fazer método de busca.  
 [✅] Fazer a navegacao chegar em um elemento vazio.  
 [✅] Fazer a navegacao voltar para testar outros ramos.  
-[❌] Fazer Geração de Grafos aleatórios.  
-[❌] Testar busca com grafo de 1000.  
-[❌] Otimizar busca.  
+[✅] Fazer Geração de Grafos aleatórios.  
+[✅] Testar busca com grafo de 1000.  
+[✅] Otimizar busca.  
 [❌] Imprimir caminhos e quantidade descobertas.  
 [❌] Fazer doc.  
 ## Linguagens de Programação
