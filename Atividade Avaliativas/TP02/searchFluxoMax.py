@@ -117,6 +117,18 @@ class buscaFluxo:
        return resp
     return resp
   
+  # ---
+  # Funcao para a busca pririzar ir para vertices não visitados do que voltar para vertices que ja foram visitados.add()
+  # ---
+  def selecionarVerticeNaoVisitado(self, listaVertice, caminhoVertice):
+    listaArestasPossiveis = []
+    cm2 =caminhoVertice.copy()
+    for v1 in listaVertice:
+      if v1[1] not in cm2:
+         listaArestasPossiveis.append(v1)
+         cm2.append(v1[1])
+    return listaArestasPossiveis
+     
   
   # ---
   # Essa e a funcao que vai realizar a navegacao até encontrar o vértice desejado ou percorrer todos os vértices.
@@ -177,12 +189,20 @@ class buscaFluxo:
       conjuntoArestaNaOrigem = conjuntoArestaNoDestino
       # Testar se vertices ajc tem caminho para o vertice desejado, se tiver pula o back track, e seleciona esta aresta
       isVerticeAdj = self.analisarVerticesAdj(conjuntoArestaNoDestino,verticeDestino)
-      if not backTrack:
-
-          #  ARRUMAR AQUI
+      if not backTrack and isVerticeAdj == []:
+       if len(conjuntoArestaNaOrigem)>1:
+         verticesNVisitados = []
+         verticesNVisitados = self.selecionarVerticeNaoVisitado(conjuntoArestaNaOrigem, caminhoVertice)
+         if verticesNVisitados != []:
+           conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(verticesNVisitados, caminhoTotalBT)
+           arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
+         else: 
+          conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
+          arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
+       else:
+         conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
+         arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
       
-       conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
-       arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
       
       if len(arestaOrigem)>0 or isVerticeAdj != []:
        if arestaOrigem[1] == verticeDestino or isVerticeAdj != []:
