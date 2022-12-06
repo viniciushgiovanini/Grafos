@@ -3,7 +3,7 @@
 #imports
 from initMatriz import gerarMatriz
 from searchFluxoMax import buscaFluxo
-from createGraph import criarG
+from createKGraph import criarG
 import time
 # from copy import deepcopy
 start = 0

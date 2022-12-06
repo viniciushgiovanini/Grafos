@@ -178,6 +178,9 @@ class buscaFluxo:
       # Testar se vertices ajc tem caminho para o vertice desejado, se tiver pula o back track, e seleciona esta aresta
       isVerticeAdj = self.analisarVerticesAdj(conjuntoArestaNoDestino,verticeDestino)
       if not backTrack:
+
+          #  ARRUMAR AQUI
+      
        conjuntoNPercorridos = self.selecionarMenorElementoNaoPercorrido(conjuntoArestaNaOrigem, caminhoTotalBT)
        arestaOrigem = self.selecionandoMenorElemento(conjuntoNPercorridos, caminho)
       
