@@ -225,13 +225,22 @@ class buscaFluxo:
   def searchPrincipal(self, m, origem, destino):
     lVertices = m[origem-1]
     lVertices.sort()
+    pAdj = []    
+    resp = []
     caminhosPercorridos = []
     cont = 0
     while(len(lVertices) > 0 and cont < len(lVertices)):
-     resp = self.buscaA(m, lVertices[cont], destino)
-     if resp != []:
-       caminhosPercorridos.append(resp.copy())
-       resp.clear()
+     pAdj = self.analisarVerticesAdj(lVertices, destino)
+     if pAdj == []:
+      resp = self.buscaA(m, lVertices[cont], destino)
+     if resp != [] or pAdj != []:
+       if resp != [] and pAdj == []:
+        caminhosPercorridos.append(resp.copy())
+        resp.clear()
+       if resp == [] and pAdj != []:
+         m[pAdj[0]-1].remove(pAdj)
+         caminhosPercorridos.append(pAdj.copy())
+         pAdj.clear()
      else:
        cont = cont + 1
     
