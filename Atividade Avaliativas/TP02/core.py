@@ -9,7 +9,7 @@ import time
 start = 0
 end = 0
 
-print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer | 2 - Realizar Geração de um Grafo")
+print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer | 2 - Realizar Geração de um Grafo K4 | 3 - Realizar Geração de um Grafo Aleatorio")
 numeroCase = int(input("Escreva o número desejado !\n"))
 Matriz = []
 vLoop = True
@@ -43,7 +43,13 @@ while(vLoop):
     qtdK = int(input("Digite o número de grafos com 4 arestas interligadas você deseja!: "))
     gGraph = criarG()
     gGraph.gerarMatrizPrinci(qtdK , nomeGerarGraph)
+  elif numeroCase == 3:
+    from createRandomGraph import criarGRD
+    nomeGerarGraph = str(input("Digite o nome do arquivo a ser criado: "))
+    qtdV = int(input("Digite o número de vértices que você deseja!: "))
+    gGraphRD = criarGRD()
+    gGraphRD.princiGerarGraphRand(qtdV, nomeGerarGraph)
   else:
     print("Valor inserido não existe !")
-  print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer | 2 - Realizar Geração de um Grafo")
+  print("0 - Encerrar o Programa | 1 - Identificar Fluxo Maximo em um Grafo Qualquer | 2 - Realizar Geração de um Grafo K4 | 3 - Realizar Geração de um Grafo Aleatorio")
   numeroCase = int(input("Escreva o número desejado !\n"))
