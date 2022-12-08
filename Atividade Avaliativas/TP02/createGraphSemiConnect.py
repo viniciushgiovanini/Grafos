@@ -24,9 +24,16 @@ class criarGAC:
     else:
       open(strInterpolacao, 'w').close()
     obj = open(strInterpolacao, 'r+')
+    
+    number = qtdVertices -1
+    valorSub = 0
+    contC = qtdVertices - 1
+    while contC > 0:
+      valorSub = valorSub + number  
+      number = number -1
+      contC = contC - 1
      
-     
-    linhaum = str(int(qtdVertices)) + " " + str(int((qtdVertices * (qtdVertices-1))+1)) + "\n"
+    linhaum = str(int(qtdVertices)) + " " + str(int((valorSub)+1)) + "\n"
     obj.write(linhaum)
     self.realizarSalvemento(m, obj)
   
@@ -48,6 +55,7 @@ class criarGAC:
         Adj.append(aresta.copy())
         aresta.clear()
      m.append(Adj.copy())
+     listaDestino.remove(cont)
      Adj.clear()
      cont = cont + 1
    return m
@@ -56,5 +64,5 @@ class criarGAC:
     m = []
     m = self.gerarMatrizGAC(m, qtdVertices)
     self.salvarMatrizArquivo(m, qtdVertices, nomeArq)
-    print("A")
+    
   
