@@ -97,12 +97,25 @@ class buscaFluxo:
   # Essa funcao inverterCaminhoPercorrido inverte toda a lista de vertices adjacentes.add()
   # ---
   def inverterCaminhoPercorrido(self, m, caminho):
+    origem = 0
+    destino = 0
+    lADj1 = []
+    lADj2 = []
     for item in caminho:
      origem = item[0]-1
      destino = item[1]-1
-     arestaInvertida  = self.inverterElemento(item)
-     m[origem].remove(item)
-     m[destino].append(arestaInvertida)
+     arestaInvertida  = self.inverterElemento(item).copy()
+     lADj1 = m[origem].copy()
+     lADj1.remove(item)
+     m[origem].clear()
+     m[origem] = lADj1.copy()
+     lADj1.clear()
+     
+     lADj2 = m[destino].copy()
+     lADj2.append(arestaInvertida)
+     m[destino].clear()
+     m[destino] = lADj2.copy()
+     lADj2.clear()
   
   
   # ---
