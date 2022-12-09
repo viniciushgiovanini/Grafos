@@ -238,8 +238,11 @@ class buscaFluxo:
         caminhosPercorridos.append(resp.copy())
         resp.clear()
        if resp == [] and pAdj != []:
-         m[pAdj[0]-1].remove(pAdj)
-         caminhosPercorridos.append(pAdj.copy())
+         l = []
+         l.append(pAdj.copy())
+         self.inverterCaminhoPercorrido(m, l)
+         caminhosPercorridos.append(l.copy())
+         l.clear()
          pAdj.clear()
      else:
        cont = cont + 1
