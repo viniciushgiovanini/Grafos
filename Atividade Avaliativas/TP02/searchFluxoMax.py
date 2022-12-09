@@ -52,20 +52,20 @@ class buscaFluxo:
   # ---------------------------------------X-----------------------------------
   # Funcoes principais da pesquisa
   
-  # ---
-  # Remove elemento de volta
-  # ---
-  def testarCiclodeVoltaRemove(self, listaSup, valor):
-    valor2 = valor.copy()
-    destino = valor[1]
-    tmp1 = valor[0]
-    valorDestino = listaSup[destino-1]
-    valor2[0] = destino
-    valor2[1] = tmp1
+  # # ---
+  # # Remove elemento de volta
+  # # ---
+  # def testarCiclodeVoltaRemove(self, listaSup, valor):
+  #   valor2 = valor.copy()
+  #   destino = valor[1]
+  #   tmp1 = valor[0]
+  #   valorDestino = listaSup[destino-1]
+  #   valor2[0] = destino
+  #   valor2[1] = tmp1
     
-    for item in valorDestino:
-     if item == valor2:
-      listaSup[destino-1].remove(valor2)  
+  #   for item in valorDestino:
+  #    if item == valor2:
+  #     listaSup[destino-1].remove(valor2)  
 
   # ---
   # Pega a qtd dos vertices adjacentes ignorando o caminho que veio
@@ -236,7 +236,7 @@ class buscaFluxo:
   # Quando ele sair de um ramo e não encontrar o resultado ele pula para o outro ramo/vertice adjacente.
   # ---
   def searchPrincipal(self, m, origem, destino):
-    lVertices = m[origem-1]
+    lVertices = m[origem-1].copy()
     lVertices.sort()
     pAdj = []    
     resp = []
@@ -248,11 +248,13 @@ class buscaFluxo:
       resp = self.buscaA(m, lVertices[cont], destino)
      if resp != [] or pAdj != []:
        if resp != [] and pAdj == []:
+        lVertices.remove(resp[0])
         caminhosPercorridos.append(resp.copy())
         resp.clear()
        if resp == [] and pAdj != []:
          l = []
          l.append(pAdj.copy())
+         lVertices.remove(l[0])
          self.inverterCaminhoPercorrido(m, l)
          caminhosPercorridos.append(l.copy())
          l.clear()
