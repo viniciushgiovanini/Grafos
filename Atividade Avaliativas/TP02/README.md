@@ -16,8 +16,8 @@
 [✅] Fazer Geração de Grafos aleatórios.  
 [✅] Testar busca com grafo de 1000.  
 [✅] Otimizar busca.  
-[❌] Imprimir caminhos e quantidade descobertas.  
-[❌] Fazer doc.  
+[✅] Imprimir caminhos e quantidade descobertas.  
+[✅] Fazer doc.  
 ## Linguagens de Programação
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="50px"/>
