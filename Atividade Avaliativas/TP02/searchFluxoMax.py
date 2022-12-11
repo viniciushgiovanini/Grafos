@@ -51,21 +51,6 @@ class buscaFluxo:
    
   # ---------------------------------------X-----------------------------------
   # Funcoes principais da pesquisa
-  
-  # # ---
-  # # Remove elemento de volta
-  # # ---
-  # def testarCiclodeVoltaRemove(self, listaSup, valor):
-  #   valor2 = valor.copy()
-  #   destino = valor[1]
-  #   tmp1 = valor[0]
-  #   valorDestino = listaSup[destino-1]
-  #   valor2[0] = destino
-  #   valor2[1] = tmp1
-    
-  #   for item in valorDestino:
-  #    if item == valor2:
-  #     listaSup[destino-1].remove(valor2)  
 
   # ---
   # Pega a qtd dos vertices adjacentes ignorando o caminho que veio

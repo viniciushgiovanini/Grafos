@@ -38,6 +38,10 @@ class criarGRD:
       cont = cont + 1
     return anotherList 
   
+  # ---
+  # Funcao gerar Matriz princi pega a origem sorteia a quantidade de vértices que vai ter saindo
+  # e quais são esses vértices
+  # ---
   def gerarMatrizPrinciRD(self, qtdVertices, qtdLinhasReturn):
     m = []
     # grau = qtdVertices
@@ -85,6 +89,10 @@ class criarGRD:
     qtdLinhasReturn.append(qtdLinhas)
     return m
   
+  # ---
+  # Funcao principal responsavel por receber o nome do arquivo e a quantidade de vértices
+  # e mandar para a funcao gerar Matriz princi
+  # ---
   def princiGerarGraphRand(self,  qtdVertices, nomearq):
     qtdLinhas = []
     m = []

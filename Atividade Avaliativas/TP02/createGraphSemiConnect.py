@@ -2,6 +2,10 @@ import os
 
 class criarGAC:
   
+  # Essa funcao tem como objetivo criar um grafo que o seu primeiro vértice
+  # conecta com todo mundo, mas o segundo conecta em todo mundo menos o primeiro
+  # dessa forma o último não vai conectar com ninguem, só receber arestas de todos.
+  
   def isPath(self, caminho):
     resp = False
     if (os.path.exists(caminho)):
